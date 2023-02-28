@@ -1,14 +1,6 @@
-html,
-body {
-	padding: 0;
-	margin: 0;
-}
-
-a {
-	color: inherit;
-	text-decoration: none;
-}
-
-* {
-	box-sizing: border-box;
+body{
+    background-image: url(../../public/Imagenes/fondo-logistica.png);
+    color: rgb(138, 24, 24);
+    margin: 0;
+    padding: 0;
 }
