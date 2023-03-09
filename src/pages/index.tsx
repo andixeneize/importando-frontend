@@ -35,7 +35,8 @@ const Home: NextPage = () => {
         <input type="password" placeholder="Ingrese su contraseña" {...register("password")} />
 
         <div className={styles.remember}>
-          Recordarme <input type="checkbox" {...register("remember")} />
+          <label className={styles.rememberContent}>Recordarme</label> 
+          <input className={styles.rememberContent} type="checkbox" {...register("remember")} />
         </div>
 
         <input type="submit" />
