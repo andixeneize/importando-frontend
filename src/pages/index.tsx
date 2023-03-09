@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from 'next/router'
 import styles from "@styles/index.module.css";
 
 type Inputs = {
@@ -9,6 +10,8 @@ type Inputs = {
 };
 
 const Home: NextPage = () => {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -37,8 +40,14 @@ const Home: NextPage = () => {
 
         <input type="submit" />
 
-        <a href="">Olvide mi contraseña</a> <br></br>
-        <a href="">Crear una nueva cuenta</a>
+        <div>
+          <a href="">Olvide mi contraseña</a> <br></br>
+          <a href="">Crear una nueva cuenta</a>
+        </div>
+
+        <button type="button" className={styles.navButton} onClick={() => router.push('/despacho')}>
+          Despachos
+        </button>
       </form>
     </div>
   );
