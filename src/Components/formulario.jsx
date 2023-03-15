@@ -3,12 +3,7 @@ import { useForm, handleSubmit, } from "react-hook-form";
 const Formulario = () =>{
 
     const {register, formState: {errors}, watch, handleSubmit} = useForm({
-        defaultValues: {
-            nombre: "Tomas",
-            apellido: "Cuchu",
-            email:"...@gmail.com",
-            edad: 18,
-        }
+        
     });
 
     const onSubmit = (data) =>  {

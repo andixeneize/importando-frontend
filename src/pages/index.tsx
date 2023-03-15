@@ -43,7 +43,7 @@ const Home: NextPage = () => {
 
         <div>
           <a href="">Olvide mi contraseña</a> <br></br>
-          <a href="">Crear una nueva cuenta</a>
+          <a href="/registro">Crear una nueva cuenta</a>
         </div>
 
         <button type="button" className={styles.navButton} onClick={() => router.push('/despacho')}>
