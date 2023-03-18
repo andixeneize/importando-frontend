@@ -1,4 +1,5 @@
 import { useForm, handleSubmit, } from "react-hook-form";
+import styles from "@styles/registro.module.css"
 
 const Formulario = () =>{
 
@@ -12,25 +13,46 @@ const Formulario = () =>{
 
     const recibirNoticias = watch("recibirNoticias");
 
-    return <div>
-         <h2>Formulario de registro</h2>
+    return <div className={styles.registerBox}>
+         <h1>Formulario de registro</h1>
          <form onSubmit={handleSubmit(onSubmit)}>
             <div>
                 <label htmlFor="">Nombre</label>
                 <input type="text" {...register("nombre", {
                     required: true,
-                    maxLength: 10,
+                    pattern:  /^[a-zA\_\-]{4,15}$/,
                 })} />
                 {errors.nombre?.type === "required" && <p>El campo nombre es requerido</p>}
-                {errors.nombre?.type === "maxLength" && <p>El campo nombre no debe tener mas de diez caracteres.</p>}
+                {errors.nombre?.type === "pattern" && <p>El nombre debe ser de 4 a 15 caracteres y no solo contener letras</p>}
             </div>
             <div>
                 <label htmlFor="">Apellido</label>
                 <input type="text"  {...register("apellido",{
                     required:true,
-                    maxLength:10,
+                    pattern:  /^[a-zA\_\-]{4,15}$/,
                 })}  />
                 {errors.apellido?.type === "required" && <p>El campo apellido es requerido</p>}
+                {errors.nombre?.type === "pattern" && <p>El nombre debe ser de 4 a 15 caracteres y no solo contener letras</p>}
+            </div>
+            <div>
+                <label htmlFor="">Edad</label>
+                <input type="number"  {...register("edad",{
+                    required:true,
+                    min:18,
+                    max:99,
+                })}  />
+                {errors.edad?.type === "required" && <p>El campo edad es requerido</p>}
+                {errors.edad?.type === "min" && <p>La edad no puede ser menor a 18</p>}
+                {errors.edad?.type === "max" && <p>La edad no puede ser mayor a 99</p>}
+            </div> 
+            <div>
+                <label htmlFor="">Usuario</label>
+                <input type="text"  {...register("usuario",{
+                    required:true,
+                    pattern:   /^[a-zA-Z0-9\_\-]{4,15}$/,
+                })}  />
+                {errors.usuario?.type === "required" && <p>El campo usuario es requerido</p>}
+                {errors.usuario?.type === "pattern" && <p>El nombre debe ser de 4 a 15 caracteres y solo contener letras y/o numeros</p>}
             </div>
             <div>
                 <label htmlFor="">Email</label>
@@ -42,14 +64,32 @@ const Formulario = () =>{
                 {errors.email?.type === "pattern" && <p>El formato del email es inválido</p>}
             </div>
             <div>
-                <label htmlFor="">Edad</label>
-                <input type="text"  {...register("edad",{
+                <label htmlFor="">Confirmar email</label>
+                <input type="text"  {...register("email",{
                     required:true,
-                    min:18,
+                   pattern: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/    
                 })}  />
-                {errors.edad?.type === "required" && <p>El campo edad es requerido</p>}
-                {errors.edad?.type === "min" && <p>La edad no puede ser menor a 18</p>}
-            </div> 
+                {errors.email?.type === "required" && <p>El campo email es requerido</p>}
+                {errors.email?.type === "pattern" && <p>El formato del email es inválido</p>}
+            </div>
+            <div>
+                <label htmlFor="">Contraseña</label>
+                <input type="password"  {...register("contraseña",{
+                    required:true,
+                   pattern:/^.{4,12}$/,   
+                })}  />
+                {errors.contraseña?.type === "required" && <p>El campo contraseña es requerido</p>}
+                {errors.contraseña?.type === "pattern" && <p>La contraseña debe tener entre 4 y 12 caracteres</p>}
+            </div>
+            <div>
+                <label htmlFor="">Repetir contraseña</label>
+                <input type="password"  {...register("repetirContraseña",{
+                    required:true,
+                   pattern:/^.{4,12}$/,   
+                })}  />
+                {errors.repetirContraseña?.type === "required" && <p>El campo contraseña es requerido</p>}
+                {errors.repetirContraseña?.type === "pattern" && <p>La contraseña debe tener entre 4 y 12 caracteres</p>}
+            </div>
             <div>
                 <label htmlFor="">Pais de origen</label>
                 <select  {...register("pais")}>

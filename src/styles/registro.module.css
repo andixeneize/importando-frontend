@@ -1,0 +1,58 @@
+.registerBox{
+    width: 420px;
+    height: auto;
+    background-color: rgb(7, 7, 7);
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 30px 30px;
+}
+
+.registerBox label:first-child{
+    margin-top: 20px;
+}
+
+
+.registerBox label{
+    margin: 0;
+    padding: 0 ;
+    font-weight: bold;
+    display: block;
+}
+
+.registerBox h1{
+    padding-top: 50px;
+    text-align: center;
+    font-size: 21px;
+}
+/* 
+
+.registerBox input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.registerBox input[type="text"],
+.registerBox input[type="password"]{
+    border: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: white;
+    font-size: 16px;
+}
+
+.registerBox input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background-color: #0f1ab8;
+    color: white;
+    font-size: 18px;
+    border-radius: 20px;
+    margin: 20px 0px;
+} */

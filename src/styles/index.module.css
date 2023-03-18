@@ -80,6 +80,22 @@
     margin: 0px!important;
 }
 
+.botonera{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+
 .navButton {
-    margin-top: 24px;
+    border: none;
+    outline: none;
+    height: 40px;
+    background-color: #0f1ab8;
+    color: white;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 5px 20px;
 }

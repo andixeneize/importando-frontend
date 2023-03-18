@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.loginBox}>
-      <h1>Registrate</h1>
+      <h1>Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="UserName">Nombre de usuario</label>
@@ -41,14 +41,13 @@ const Home: NextPage = () => {
 
         <input type="submit" />
 
-        <div>
-          <a href="">Olvide mi contraseña</a> <br></br>
-          <a href="/registro">Crear una nueva cuenta</a>
+        <div className={styles.botonera}>
+         <button  type="button" className={styles.navButton} onClick={() => router.push('/registro')}>Olvide mi contraseña</button>  
+         <br>
+         </br>
+         <button  type="button" className={styles.navButton} onClick={() => router.push('/registro')}>Crear una nueva cuenta</button>
         </div>
 
-        <button type="button" className={styles.navButton} onClick={() => router.push('/despacho')}>
-          Despachos
-        </button>
       </form>
     </div>
   );
