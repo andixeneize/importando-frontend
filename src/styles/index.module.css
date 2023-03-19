@@ -92,7 +92,7 @@
     height: 40px;
     font-size: 18px;
     border-radius: 20px;
-    margin-bottom: 12px;
+    text-decoration: none;
 }
 
 .error {
