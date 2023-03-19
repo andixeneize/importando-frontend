@@ -26,8 +26,8 @@ const Home: NextPage = () => {
     <div className={styles.loginBox}>
       <h1>Iniciar sesión</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="UserName">Nombre de usuario</label>
-        <input type="text" placeholder="Ingrese su usuario" {...register("email", { required: true })} />
+        <label htmlFor="UserName">Email</label>
+        <input type="text" placeholder="Ingrese su email" {...register("email", { required: true })} />
         {errors.email && <span className={styles.error}>Este campo es obligatorio</span>}
 
         <label htmlFor="password">Contraseña</label>
