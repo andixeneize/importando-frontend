@@ -1,0 +1,73 @@
+.error {
+    color: lightcoral;
+    font-size: 16px;
+}
+
+
+.conteiner{
+    box-sizing: border-box;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: solid black 5px;
+    background-color: black;
+    width: 50%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}   
+
+.conteiner h1{
+    color:white;
+    padding-bottom: 10px;
+    padding-top: 0;
+    font-size: 21px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+   
+}
+
+.child{
+    display: flex;
+    flex-direction:column;
+}
+
+
+.conteiner input{
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.conteiner input[type="text"],
+.conteiner input[type="password"]{
+    border: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: white;
+    font-size: 16px;
+}
+
+.conteiner input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 30px;
+    background-color: #0f1ab8;
+    color: white;
+    font-size: 18px;
+    border-radius: 20px;
+    margin: 0px 0px 20px 0px;
+}
+
+

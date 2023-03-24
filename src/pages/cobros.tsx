@@ -5,3 +5,4 @@ const Cobros: NextPage = () => {
 }
 
 export default Cobros
+

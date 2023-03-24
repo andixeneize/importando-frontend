@@ -44,7 +44,7 @@ const Home: NextPage = () => {
 
         <div className={styles.botonera}>
           <Button variant="link" className={styles.navButton} onClick={() => router.push('/registro')}>Crear una nueva cuenta</Button>
-          <Button variant="link" className={styles.navButton} onClick={() => router.push('/registro')}>Olvide mi contraseña</Button>  
+          <Button variant="link" className={styles.navButton} onClick={() => router.push('/recuperacion')}>Olvide mi contraseña</Button>  
         </div>
       </form>
     </div>

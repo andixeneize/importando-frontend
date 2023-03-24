@@ -23,7 +23,7 @@ const Formulario = () =>{
                     pattern:  /^[a-zA\_\-]{4,15}$/,
                 })} />
                 {errors.nombre?.type === "required" && <p>El campo nombre es requerido</p>}
-                {errors.nombre?.type === "pattern" && <p>El nombre debe ser de 4 a 15 caracteres y no solo contener letras</p>}
+                {errors.nombre?.type === "pattern" && <p>El nombre debe ser de 4 a 15 caracteres y solo contener letras</p>}
             </div>
             <div>
                 <label htmlFor="">Apellido</label>
@@ -32,7 +32,7 @@ const Formulario = () =>{
                     pattern:  /^[a-zA\_\-]{4,15}$/,
                 })}  />
                 {errors.apellido?.type === "required" && <p>El campo apellido es requerido</p>}
-                {errors.nombre?.type === "pattern" && <p>El nombre debe ser de 4 a 15 caracteres y no solo contener letras</p>}
+                {errors.apellido?.type === "pattern" && <p>El nombre debe ser de 4 a 15 caracteres y solo contener letras</p>}
             </div>
             <div>
                 <label htmlFor="">Edad</label>

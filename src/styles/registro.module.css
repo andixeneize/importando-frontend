@@ -28,14 +28,14 @@
     text-align: center;
     font-size: 21px;
 }
-/* 
 
-.registerBox input{
+
+/* .registerBox input{
     width: 100%;
     margin-bottom: 20px;
-}
+} */
 
-.registerBox input[type="text"],
+/* .registerBox input[type="text"],
 .registerBox input[type="password"]{
     border: none;
     border-bottom: 1px solid white;
