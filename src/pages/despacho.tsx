@@ -37,10 +37,10 @@ const Despacho: NextPage = () => {
 				<label>Clave Externa</label>
         <input className={styles.field} {...register("claveExterna")} />
 
-        <label>Tipo</label>
+        <label>Tipo (Modo de pago)</label>
         <select className={styles.select} {...register("tipo")}>
-          <option value="C">Crédito</option>
-          <option value="A">A cobrar</option>
+          <option value="C">Crédito (Mercado Pago)</option>
+          <option value="A">A cobrar en destino</option>
         </select>
 
 				<label>Producto</label>
