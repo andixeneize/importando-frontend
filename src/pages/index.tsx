@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from 'next/router'
 import styles from "@styles/index.module.css";
 import Button from 'react-bootstrap/Button';
+import { useGetPosts } from "@services/login";
 
 
 type Inputs = {
@@ -13,6 +14,7 @@ type Inputs = {
 
 const Home: NextPage = () => {
   const router = useRouter()
+  const getPosts = useGetPosts()
 
   const {
     register,
@@ -20,7 +22,13 @@ const Home: NextPage = () => {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log('Submit')
+    console.log(data);
+    console.log(getPosts.data)
+    
+  }
 
   return (
     <div className={styles.loginBox}>

@@ -6,6 +6,7 @@ const URLS = {
 	LOGIN: '/auth/login',
 	TOKEN: '/getToken',
 	FORGOTPWD: '/auth/reset-password-email',
+	POSTS: '/posts'
 }
 
 // Forgot password
@@ -105,4 +106,27 @@ export const login = async (body: IFormLogin) => {
 		// },
 	})
 	return res
+}
+
+
+
+export const getPosts = async () => {
+	console.log('getPosts')
+	const { data } = await api.get<any>(URLS.POSTS)
+	return data
+}
+
+export const useGetPosts = () => {
+	// const { snackbar } = useSnackbar()
+	return useQuery<any>(
+		['POSTS'],
+		async () => await getPosts(),
+		{
+			retry: false,
+			onError: error => {
+				//snackbar(error.response?.data?.message ?? 'Error', 'failure')
+				console.log('Error')
+			},
+		}
+	)
 }
