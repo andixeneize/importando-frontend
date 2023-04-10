@@ -41,12 +41,7 @@ const Home: NextPage = () => {
         <label htmlFor="password">Contraseña</label>
         <input type="password" placeholder="Ingrese su contraseña" {...register("password", { required: true })} />
         {errors.password && <div className={styles.error}>Este campo es obligatorio</div>}
-        {/*
-        <div className={styles.remember}>
-          <label className={styles.rememberContent}>Recordarme</label> 
-          <input className={styles.rememberContent} type="checkbox" {...register("remember")} />
-        </div>
-        */}
+        
 
         <input type="submit" value="Ingresar" />
 

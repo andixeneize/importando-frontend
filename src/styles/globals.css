@@ -1,5 +1,6 @@
 body{
     background-image: url(../../public/Imagenes/fondo-logistica.png);
+    background-size: cover;
     color: rgb(138, 24, 24);
     margin: 0;
     padding: 0;
