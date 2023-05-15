@@ -1,17 +1,17 @@
-import { object, type Schema, string } from 'yup'
+import { object, string } from 'yup'
 
 export interface IFormLogin {
-	id: string
+	mail: string
 	password: string
 }
 
 export const loginInitialValues: IFormLogin = {
-	id: '',
+	mail: '',
 	password: '',
 }
 
-export const loginSchema: Schema<IFormLogin> = object({
-	id: string().trim().required('GRAL_REQUIRED'),
+export const loginSchema = object({
+	mail: string().trim().required('GRAL_REQUIRED'),
 	password: string().trim().required('GRAL_REQUIRED'),
 })
 
@@ -23,6 +23,6 @@ export const forgotPwdInitialValues: IFormForgotPwd = {
 	email: '',
 }
 
-export const forgotPwdSchema: Schema<IFormForgotPwd> = object({
-	email: string().trim().email('LOGIN_INVALID_EMAIL').required('GRAL_REQUIRED'),
+export const forgotPwdSchema = object({
+	email: string().trim().email('LOGIN_INVALmail_EMAIL').required('GRAL_REQUIRED'),
 })

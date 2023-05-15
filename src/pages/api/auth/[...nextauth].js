@@ -1,7 +1,6 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { login } from '@services/login'
-import jwtDecode from 'jwt-decode'
 
 export const authOptions = {
 	providers: [
@@ -9,9 +8,8 @@ export const authOptions = {
 			type: 'credentials',
 			async authorize(credentials) {
 				const body = {
-					username: credentials?.username,
+					mail: credentials?.mail,
 					password: credentials?.password,
-					lang: credentials?.locale,
 				}
 
 				return (
@@ -19,10 +17,8 @@ export const authOptions = {
 						.then(res => {
 							if (res.status === 200) {
 								const user = {
-									username: res.data.data.username,
+									mail: res.data.data.mail,
 									accessToken: res.data.data.token,
-									lang: res.data.data.lang,
-									roles: jwtDecode(res.data.data.token).permissions
 								}
 								return user
 							} else {
@@ -39,19 +35,15 @@ export const authOptions = {
 	callbacks: {
 		jwt({ token, user }) {
 			if (user) {
-				token.username = user.username
+				token.mail = user.mail
 				token.accessToken = user.accessToken
-				token.lang = user.lang
-				token.roles = user.roles
 			}
 			return token
 		},
 		session: ({ session, token }) => {
 			if (token) {
-				session.user.username = token.username
+				session.user.mail = token.mail
 				session.user.accessToken = token.accessToken
-				session.user.lang = token.lang
-				session.user.roles = token.roles
 			}
 			return session
 		},

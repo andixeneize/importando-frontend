@@ -1,17 +1,15 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { api, type IQueryResponse, type IResponseError } from '@config/api'
+import { useMutation } from '@tanstack/react-query'
+import { api, type ISuccessResponse, type IErrorResponse } from '@config/api'
 import type { IFormLogin } from '@schemas/login'
 
 const URLS = {
-	LOGIN: '/auth/login',
-	TOKEN: '/getToken',
-	FORGOTPWD: '/auth/reset-password-email',
-	POSTS: '/posts'
+	LOGIN: '/Usuario/Login',
+	FORGOTPWD: '/Usuario/resetPassword',
 }
 
 // Forgot password
 
-interface IResForgotPwd extends IQueryResponse{
+interface IResForgotPwd extends ISuccessResponse{
 	data?: {
 		is_sended: string
 	}
@@ -25,60 +23,27 @@ export interface IForgotPwd {
 export const postForgotPwd = async (body: IForgotPwd) => {
 	const { data } = await api.post<IResForgotPwd>(
 		URLS.FORGOTPWD,
-		{ email: body.email },
-		{ params: { lang: body.lang } }
+		body
 	)
 	return data
 }
 
 export const usePostForgotPwd = () => {
-	console.log('usePostForgotPwd => snackbar')
-	/*
-	const { snackbar } = useSnackbar()
-	return useMutation<IResForgotPwd, IResponseError<IForgotPwd>, IForgotPwd>(
+	return useMutation<IResForgotPwd, IErrorResponse<IForgotPwd>, IForgotPwd>(
 		['POST_FORGOT_PWD'],
 		postForgotPwd,
 		{
 			onError: error => {
-				snackbar(error.response?.data.message ?? 'Error', 'failure')
+				alert('Error: ' + error.response?.data.message)
 			},
 		}
 	)
-	*/
-}
-
-// Get token
-
-interface IToken {
-	token: string
-}
-
-export const getToken = async () => {
-	const { data } = await api.get<IToken>(URLS.TOKEN)
-	return data
-}
-
-export const useGetToken = () => {
-	console.log('useGetToken => snackbar')
-
-	/*
-	const { snackbar } = useSnackbar()
-	return useQuery<IToken, IResponseError<string>, IToken>(['GET_TOKEN'], getToken, {
-		enabled: false,
-		retry: false,
-		onError: error => {
-			snackbar(error.message, 'failure')
-		},
-	})
-	*/
 }
 
 // Login
 
-export interface ILoginResponse extends IQueryResponse {
+export interface ILoginResponse extends ISuccessResponse {
 	data?: {
-		username: string
-		lang: string
 		token: string
 	}
 }
@@ -86,10 +51,16 @@ export interface ILoginResponse extends IQueryResponse {
 export interface ISession {
 	expires: string
 	user: {
-		username: string
 		accessToken: string
-		lang: string
-		roles: string[]
+		idUsuario: number
+		name: string
+		apellido: string
+		telefono: number
+		mail: string
+		fechaNacimiento: string
+		codigo: string
+		activo: boolean
+		plan: number
 	}
 }
 
@@ -106,27 +77,4 @@ export const login = async (body: IFormLogin) => {
 		// },
 	})
 	return res
-}
-
-
-
-export const getPosts = async () => {
-	console.log('getPosts')
-	const { data } = await api.get<any>(URLS.POSTS)
-	return data
-}
-
-export const useGetPosts = () => {
-	// const { snackbar } = useSnackbar()
-	return useQuery<any>(
-		['POSTS'],
-		async () => await getPosts(),
-		{
-			retry: false,
-			onError: error => {
-				//snackbar(error.response?.data?.message ?? 'Error', 'failure')
-				console.log('Error')
-			},
-		}
-	)
 }
