@@ -1,18 +1,24 @@
 .registerBox{
-    width: 420px;
-    height: auto;
-    background-color: rgba(24, 20, 20, 0.836);
-    color: #fff;
+    box-sizing: border-box;
     top: 50%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
-    box-sizing: border-box;
-    padding: 30px 30px;
+    background-color: rgba(24, 20, 20, 0.836);
+    width: 50%;
+    height: 70%;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 10px 50px;
+    
 }
 
-.registerBox label:first-child{
-    margin-top: 20px;
+.registerBox h1{
+    padding-top: 0px;
+    text-align: center;
+    font-size: 21px;
 }
 
 
@@ -24,12 +30,10 @@
     margin-top: 20px;
 }
 
-.registerBox h1{
-    padding-top: 0px;
-    text-align: center;
-    font-size: 21px;
-}
 
+.registerBox label:first-child{
+    margin-top: 20px;
+}
 
 .registerBox input{
     width: 100%;
@@ -44,6 +48,17 @@
 }
 
 .registerBox input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background-color: #0f1ab8;
+    color: white;
+    font-size: 18px;
+    border-radius: 20px;
+    margin: 20px 0px;
+} 
+
+.registerBox input[type="reset"]{
     border: none;
     outline: none;
     height: 40px;
