@@ -16,6 +16,7 @@ export const authOptions = {
 					login(body)
 						.then(res => {
 							if (res.status === 200) {
+								console.log('200')
 								const user = {
 									mail: res.data.data.mail,
 									accessToken: res.data.data.token,
@@ -26,6 +27,7 @@ export const authOptions = {
 							}
 						})
 						.catch(error => {
+							console.log('Error: ', error)
 							throw new Error(error.response.data.message)
 						}) || null
 				)
@@ -49,7 +51,7 @@ export const authOptions = {
 		},
 	},
 	pages: {
-		signIn: '/login',
+		signIn: '/',
 	},
 }
 

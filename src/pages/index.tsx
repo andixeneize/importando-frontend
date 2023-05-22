@@ -3,7 +3,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from 'next/router'
 import styles from "@styles/index.module.css";
 import Button from 'react-bootstrap/Button';
-import { useGetPosts } from "@services/login";
+import { login } from "@services/login";
+import { sleep } from "@utils/sleep";
+import { sha256 } from 'js-sha256';
+import { signIn } from 'next-auth/react'
 
 
 type Inputs = {
@@ -14,7 +17,7 @@ type Inputs = {
 
 const Home: NextPage = () => {
   const router = useRouter()
-  const getPosts = useGetPosts()
+  // const getPosts = useGetPosts()
 
   const {
     register,
@@ -23,13 +26,57 @@ const Home: NextPage = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+
+  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     console.log('Submit')
-    console.log(data);
-    console.log(getPosts.data)
+    console.log(formData);
     
+		const data = {
+			mail: formData.email,
+			password: sha256(formData.password),
+		}
+
+    login(data).then(res => {
+      if (res.status === 200) {
+        console.log('200')
+        console.log('response: ', res)
+
+      } else {
+        console.log('login status: ' + res)
+      }
+    })
+    .catch(error => {
+      console.log('Error: ', error)
+      alert(error)
+    })
   }
 
+  const onSubmit2: SubmitHandler<Inputs> = async (formData) => {
+    console.log('Submit')
+    console.log(formData);
+    
+		// setIsSubmitting(true)
+		const login = await signIn('credentials', {
+			mail: formData.email,
+			password: formData.password, //sha256(formData.password),
+			locale: router.locale,
+			redirect: false,
+		})
+
+		if (login?.status === 401) {
+			// setIsSubmitting(false)
+			await sleep(100)
+			// snackbar(login.error ?? t('LOGIN_INCORRECT_CREDENTIALS'), 'failure')
+      alert('Error: incorrect creedentials. ' + login.error)
+			// setUserFocus()
+		} else if (login?.status === 200) {
+			// setIsSubmitting(false)
+			router.push('/cobros')
+		}
+		// loginReset()
+  }
+
+  
   return (
     <div className={styles.loginBox}>
       <h1>Iniciar sesión</h1>
