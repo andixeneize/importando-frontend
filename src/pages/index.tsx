@@ -32,7 +32,7 @@ const Home: NextPage = () => {
     console.log(formData);
     
 		const data = {
-			mail: formData.email,
+			email: formData.email,
 			password: sha256(formData.password),
 		}
 
@@ -57,7 +57,7 @@ const Home: NextPage = () => {
     
 		// setIsSubmitting(true)
 		const login = await signIn('credentials', {
-			mail: formData.email,
+			email: formData.email,
 			password: formData.password, //sha256(formData.password),
 			locale: router.locale,
 			redirect: false,

@@ -56,7 +56,7 @@ export interface ISession {
 		name: string
 		apellido: string
 		telefono: number
-		mail: string
+		email: string
 		fechaNacimiento: string
 		codigo: string
 		activo: boolean

@@ -8,7 +8,7 @@ export const authOptions = {
 			type: 'credentials',
 			async authorize(credentials) {
 				const body = {
-					mail: credentials?.mail,
+					email: credentials?.email,
 					password: credentials?.password,
 				}
 
@@ -18,7 +18,7 @@ export const authOptions = {
 							if (res.status === 200) {
 								console.log('200')
 								const user = {
-									mail: res.data.data.mail,
+									email: res.data.data.email,
 									accessToken: res.data.data.token,
 								}
 								return user
@@ -37,14 +37,14 @@ export const authOptions = {
 	callbacks: {
 		jwt({ token, user }) {
 			if (user) {
-				token.mail = user.mail
+				token.email = user.email
 				token.accessToken = user.accessToken
 			}
 			return token
 		},
 		session: ({ session, token }) => {
 			if (token) {
-				session.user.mail = token.mail
+				session.user.email = token.email
 				session.user.accessToken = token.accessToken
 			}
 			return session

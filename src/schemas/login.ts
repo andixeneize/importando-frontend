@@ -1,17 +1,17 @@
 import { object, string } from 'yup'
 
 export interface IFormLogin {
-	mail: string
+	email: string
 	password: string
 }
 
 export const loginInitialValues: IFormLogin = {
-	mail: '',
+	email: '',
 	password: '',
 }
 
 export const loginSchema = object({
-	mail: string().trim().required('GRAL_REQUIRED'),
+	email: string().trim().required('GRAL_REQUIRED'),
 	password: string().trim().required('GRAL_REQUIRED'),
 })
 
