@@ -81,20 +81,23 @@ const Home: NextPage = () => {
     <div className={styles.loginBox}>
       <h1>Iniciar sesión</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="UserName">Email</label>
-        <input type="text" placeholder="Ingrese su email" {...register("email", { required: true })} />
-        {errors.email && <span className={styles.error}>Este campo es obligatorio</span>}
-
-        <label htmlFor="password">Contraseña</label>
-        <input type="password" placeholder="Ingrese su contraseña" {...register("password", { required: true })} />
-        {errors.password && <div className={styles.error}>Este campo es obligatorio</div>}
         
+          <label htmlFor="UserName">Email</label>
+          <input type="text" placeholder="Ingrese su email" {...register("email", { required: true })} />
+          {errors.email && <span className={styles.error}>Este campo es obligatorio</span>}
+    
 
-        <input type="submit" value="Ingresar" />
-
-        <div className={styles.botonera}>
-          <Button variant="link" className={styles.navButton} onClick={() => router.push('/registro')}>Crear una nueva cuenta</Button>
-          <Button variant="link" className={styles.navButton} onClick={() => router.push('/recuperacion')}>Olvide mi contraseña</Button>  
+        
+          <label htmlFor="password">Contraseña</label>
+          <input type="password" placeholder="Ingrese su contraseña" {...register("password", { required: true })} />
+          {errors.password && <div className={styles.error}>Este campo es obligatorio</div>}
+        
+       
+          <input type="submit" value="Ingresar" />
+          
+          <div className={styles.botonera}>
+            <Button variant="link" className={styles.navButton} onClick={() => router.push('/registro')}>Crear una nueva cuenta</Button>
+            <Button variant="link" className={styles.navButton} onClick={() => router.push('/recuperacion')}>Olvide mi contraseña</Button>  
         </div>
       </form>
     </div>

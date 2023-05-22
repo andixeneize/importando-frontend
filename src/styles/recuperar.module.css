@@ -1,55 +1,43 @@
-.error {
-    color: lightcoral;
-    font-size: 16px;
-}
-
-
 .conteiner{
     box-sizing: border-box;
     top: 50%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
-    border: solid black 5px;
-    background-color: black;
+    background-color: rgba(24, 20, 20, 0.836);
     width: 50%;
-    height: 80%;
+    height: 70%;
+    color: white;
     display: flex;
     flex-direction: column;
-    justify-content:center;
-    align-items: center;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+    justify-content:space-evenly;
+    padding: 10px 50px;
+    
 }   
 
 .conteiner h1{
-    color:white;
-    padding-bottom: 10px;
     padding-top: 0;
+    text-align: center;
     font-size: 21px;
 }
 
-.form{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-   
+
+.conteiner label{
+    margin: 0;
+    padding: 0 ;
+    font-weight: bold;
+    display: block;
+    margin-top: 20px;
 }
 
-.child{
-    display: flex;
-    flex-direction:column;
-}
 
+.conteiner label:first-child{
+    margin-top: 20px;
+}
 
 .conteiner input{
     width: 100%;
-    margin-bottom: 8px;
-}
-
-.conteiner input[type="text"],
-.conteiner input[type="password"]{
+    margin-bottom: 5px;
     border: none;
     border-bottom: 1px solid white;
     background: transparent;
@@ -62,12 +50,29 @@
 .conteiner input[type="submit"]{
     border: none;
     outline: none;
-    height: 30px;
+    height: 40px;
     background-color: #0f1ab8;
     color: white;
     font-size: 18px;
     border-radius: 20px;
-    margin: 0px 0px 20px 0px;
+    margin: 20px 0px;
 }
 
 
+.conteiner input[type="text"],
+.conteiner input[type="password"]{
+    border: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: white;
+    font-size: 16px;
+}
+
+
+
+.error {
+    color: lightcoral;
+    font-size: 16px;
+}

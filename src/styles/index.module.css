@@ -1,15 +1,16 @@
 
 .loginBox{
-    width: 320px;
-    height: auto;
+    width: 340px;
+    height: 550px;
     background-color: rgb(24, 20, 20, 0.836);
     color: #fff;
-    top: 50%;
     left: 50%;
+    top: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
     box-sizing: border-box;
-    padding: 30px 30px;
+    padding: 80px 30px;
+    overflow: hidden;
 }
 
 .loginBox label:first-child{
@@ -22,7 +23,7 @@
     padding: 0 ;
     font-weight: bold;
     display: block;
-    margin-top: 20px;
+ 
 }
 
 .loginBox h1{
@@ -33,7 +34,7 @@
 
 .loginBox input{
     width: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .loginBox input[type="text"],
@@ -55,19 +56,7 @@
     color: white;
     font-size: 18px;
     border-radius: 20px;
-    margin: 40px 0px 20px 0px;
-}
-
-.loginBox a{
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    line-height: 20px;
-    color: gray;
-}
-
-.loginBox a:hover{
-    color: white;
+    margin: 20px 0px 20px 0px;
 }
 
 .remember{
@@ -86,6 +75,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
 }
 
 .navButton {
@@ -99,3 +89,4 @@
     color: lightcoral;
     font-size: 16px;
 }
+
