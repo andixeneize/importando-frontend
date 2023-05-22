@@ -5,8 +5,8 @@ import styles from "@styles/index.module.css";
 import Button from 'react-bootstrap/Button';
 import { login } from "@services/login";
 import { sleep } from "@utils/sleep";
-import { sha256 } from 'js-sha256';
 import { signIn } from 'next-auth/react'
+var sha256 = require('sha-256-js');
 
 
 type Inputs = {
