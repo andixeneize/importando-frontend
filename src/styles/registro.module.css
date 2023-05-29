@@ -4,7 +4,7 @@
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
-    background-color: rgba(24, 20, 20, 0.836);
+    background-color: rgba(24, 20, 20, 0.849);
     width: 50%;
     height: 70%;
     color: #fff;
@@ -12,27 +12,13 @@
     flex-direction: column;
     justify-content: space-evenly;
     padding: 10px 50px;
-    
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.733);
 }
 
 .registerBox h1{
     padding-top: 0px;
     text-align: center;
     font-size: 21px;
-}
-
-
-.registerBox label{
-    margin: 0;
-    padding: 0 ;
-    font-weight: bold;
-    display: block;
-    margin-top: 20px;
-}
-
-
-.registerBox label:first-child{
-    margin-top: 20px;
 }
 
 .registerBox input{
@@ -45,6 +31,18 @@
     height: 40px;
     color: white;
     font-size: 16px;
+}
+
+.registerBox label{
+    margin: 0;
+    padding: 0 ;
+    font-weight: bold;
+    display: block;
+    margin-top: 20px;
+}
+
+.registerBox label:first-child{
+    margin-top: 20px;
 }
 
 .registerBox input[type="submit"]{

@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "@styles/despacho.module.css";
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 interface IFormInput {
   generarRemito: String;
@@ -24,49 +26,77 @@ const Despacho: NextPage = () => {
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
 
   return (
-    <Container className="text-center my-5">
-      <h1 className={styles.title}>Despacho</h1>
-
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <label>Remito</label>
-        <input className={styles.field} {...register("generarRemito")} />
-
-				<label>Agencia de origen</label>
-        <input className={styles.field} {...register("agenciaOrigen")} />
-
-				<label>Clave Externa</label>
-        <input className={styles.field} {...register("claveExterna")} />
-
-        <label>Tipo (Modo de pago)</label>
-        <select className={styles.select} {...register("tipo")}>
-          <option value="C">Crédito (Mercado Pago)</option>
-          <option value="A">A cobrar en destino</option>
-        </select>
-
-				<label>Producto</label>
-        <input className={styles.field} {...register("producto")} />
-
-				<label>Bultos</label>
-        <input className={styles.field} {...register("bultos")} />
-
-				<label>Kilos</label>
-        <input className={styles.field} {...register("kilos")} />
-
-				<label>Destinatario</label>
-        <input className={styles.field} {...register("destinatario")} />
-
-				<label>Dirección</label>
-        <input className={styles.field} {...register("direccion")} />
-
-				<label>Localidad</label>
-        <input className={styles.field} {...register("localidad")} />
-
-				<label>RUT</label>
-        <input className={styles.field} {...register("rut")} />
-				
-        <input type="submit" className={styles.submit} value="Enviar"/>
+    <div className={styles.despachoBox}>
+      <h1>Despacho</h1> 
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Container>
+          <Row>
+            <Col> 
+                <label >Remito</label>
+                <input  {...register("generarRemito")} />
+            </Col>
+            <Col>
+                <label >Agencia de origen</label>
+                <input  {...register("agenciaOrigen")} />
+            </Col>
+          </Row>
+          <Row>
+            <Col> 
+                <label >Clave Externa</label>
+                <input  {...register("claveExterna")} />
+            </Col>
+            <Col>
+              <label >Tipo (Modo de pago)</label>
+                <select  {...register("tipo")}>
+                  <option value="C">Crédito (Mercado Pago)</option>
+                  <option value="A">A cobrar en destino</option>
+                </select>
+            </Col>
+          </Row>
+          <Row>
+            <Col> 
+                <label >Producto</label>
+                <input  {...register("producto")} />
+            </Col>
+            <Col>
+                <label >Bultos</label>
+                <input  {...register("bultos")} />
+            </Col>
+          </Row>
+          <Row>
+            <Col> 
+                <label >Kilos</label>
+                <input  {...register("kilos")} />
+            </Col>
+            <Col>
+                <label >Destinatario</label>
+                <input  {...register("destinatario")} />
+            </Col>
+          </Row>
+          <Row>
+            <Col> 
+                <label >Dirección</label>
+                <input  {...register("direccion")} />
+            </Col>
+            <Col>
+                <label >Localidad</label>
+                <input  {...register("localidad")} />
+            </Col>
+          </Row>
+                <label >RUT</label>
+                <input  {...register("rut")} />
+          <Row>
+            <Col>
+                <input type="submit" value="Enviar"/> 
+            </Col>
+            <Col>
+                <input type="reset"  value="Borrar" />
+            </Col>
+          </Row>
+        </Container>
       </form>
-    </Container>
+      </div>
+    
   );
 };
 

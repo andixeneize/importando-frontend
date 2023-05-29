@@ -2,7 +2,7 @@
 .loginBox{
     width: 340px;
     height: 550px;
-    background-color: rgb(24, 20, 20, 0.836);
+    background-color: rgba(24, 20, 20, 0.849);
     color: #fff;
     left: 50%;
     top: 50%;
@@ -11,6 +11,7 @@
     box-sizing: border-box;
     padding: 80px 30px;
     overflow: hidden;
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.733);
 }
 
 .loginBox label:first-child{

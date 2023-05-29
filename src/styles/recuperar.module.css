@@ -4,16 +4,23 @@
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
-    background-color: rgba(24, 20, 20, 0.836);
-    width: 50%;
-    height: 70%;
+    background-color: rgba(24, 20, 20, 0.849);
+    width: 30%;
+    height: 90%;
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content:space-evenly;
+    justify-content:center;
     padding: 10px 50px;
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.733);
     
 }   
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
 
 .conteiner h1{
     padding-top: 0;
@@ -47,17 +54,36 @@
     font-size: 16px;
 }
 
+.child {
+    display: flex;
+    flex-direction: column;
+    
+}
+
 .conteiner input[type="submit"]{
     border: none;
     outline: none;
     height: 40px;
+    width: 40%;
+    background-color: #0f1ab8;
+    color: white;
+    font-size: 18px;
+    border-radius: 20px;
+    margin: 20px 0px;
+    align-self: center;
+}
+
+.conteiner input[type="reset"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 40%;
     background-color: #0f1ab8;
     color: white;
     font-size: 18px;
     border-radius: 20px;
     margin: 20px 0px;
 }
-
 
 .conteiner input[type="text"],
 .conteiner input[type="password"]{
@@ -75,4 +101,13 @@
 .error {
     color: lightcoral;
     font-size: 16px;
+}
+
+
+.acceso{
+    margin-top: 10px;
+    display: flex;
+    flex-direction:row;
+    justify-content:space-around;
+   
 }
