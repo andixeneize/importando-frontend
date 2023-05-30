@@ -77,7 +77,7 @@ const Formulario = () =>{
             </Col>
             <Col><div id="nac">
                     <label htmlFor="">Fecha de nacimiento</label>
-                    <input type="date" id="start" name="trip-start" min="1900-01-01" max="2022-12-31" placeholder="dd/mm/aaaa" {...register("nacimiento",{
+                    <input type="date" id="start" name="trip-start" min="1900-01-01" max="2022-12-31"  placeholder="dd/mm/aaaa" {...register("nacimiento",{
                     required:true,   
                     })}/>  
                     {errors.nacimiento?.type === "required" && <p className={styles.error}>El campo fecha de nacimiento es requerido</p>}
