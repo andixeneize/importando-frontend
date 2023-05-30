@@ -4,8 +4,16 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import styles from "@styles/consulta.module.css";
+import { sleep } from "@utils/sleep";
+import { useState } from "react";
 
 const Consulta: NextPage = () => {
+  const [loading, setLoading] = useState(true);
+
+  async function consultar() {
+    await sleep(1000)
+    console.log('Consultando...')
+  }
 
   let consulta = {
     agencia: '001',
@@ -25,7 +33,7 @@ const Consulta: NextPage = () => {
     <div className={styles.container}>
       <Card
         bg="dark"
-        key="dark"
+        key="consultar"
         text="white"
         style={{ width: '24rem' }}
         className="m-5">
@@ -39,19 +47,19 @@ const Consulta: NextPage = () => {
         </ListGroup>
 
         <Card.Body>
-          <Button variant="secondary">Consultar</Button>
+          <Button variant="secondary" onClick={() => consultar()}>Consultar</Button>
         </Card.Body>
       </Card>
 
       <Card
         bg="dark"
-        key="dark"
+        key="resultado-consulta"
         text="white"
         style={{ width: '24rem' }}
         className="m-5">
         <Card.Header as="h5" className="p-3">Resultados</Card.Header>
 
-        <ListGroup >
+        {loading && (<ListGroup >
           <ListGroup.Item variant="dark">Agencia: {consulta.agencia}</ListGroup.Item>
           <ListGroup.Item variant="dark">Clave Externa: {consulta.claveExterna}</ListGroup.Item>
           <ListGroup.Item variant="dark">Datos Extra: {consulta.datosExtra}</ListGroup.Item>
@@ -63,7 +71,7 @@ const Consulta: NextPage = () => {
           <ListGroup.Item variant="dark">Fecha Estado: {consulta.fechaEstado}</ListGroup.Item>
           <ListGroup.Item variant="dark">Lugar Persona: {consulta.lugarPersona}</ListGroup.Item>
           <ListGroup.Item variant="dark">Remito: {consulta.remito}</ListGroup.Item>
-        </ListGroup>
+        </ListGroup>)}
       </Card>
     </div>
   );
