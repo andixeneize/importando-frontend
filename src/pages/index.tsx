@@ -38,7 +38,7 @@ const Home: NextPage = () => {
       if (res.status === 200) {
         console.log('200')
         console.log('response: ', res)
-        router.push('/cobros')
+        router.push('/consulta')
       } else if (res.status === 401) {
         await sleep(100)
         alert('Error: incorrect creedentials. ')

@@ -6,11 +6,9 @@
     transform: translate(-50%, -50%);
     background-color: rgba(24, 20, 20, 0.849);
     width: 50%;
-    height: 70%;
     color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     padding: 10px 50px;
     box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.733);
 }
@@ -70,4 +68,14 @@
 .error {
     color: lightcoral;
     font-size: 16px;
+}
+
+.title {
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+
+.buttons {
+    margin-top: 48px;
+    margin-bottom: 8px;
 }

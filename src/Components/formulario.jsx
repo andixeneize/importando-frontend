@@ -51,7 +51,8 @@ const Formulario = () => {
 
   return (
     <div className={styles.registerBox}>
-      <h1>Formulario de registro</h1>
+      <h1 className={styles.title}>Crear una cuenta</h1>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container>
           <Row>
@@ -237,7 +238,7 @@ const Formulario = () => {
               </div>
             </Col>
           </Row>
-          <Row>
+          <Row className={styles.buttons}>
             <Col>
               <input type="submit" value="Enviar" />
             </Col>
