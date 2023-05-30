@@ -26,3 +26,14 @@ export const forgotPwdInitialValues: IFormForgotPwd = {
 export const forgotPwdSchema = object({
 	email: string().trim().email('LOGIN_INVALmail_EMAIL').required('GRAL_REQUIRED'),
 })
+
+export interface IFormRegister {
+  nombre: string
+	apellido: string
+	telefono: string
+	email: string
+	password: string
+	fechaNacimiento: string
+	activo: boolean
+	plan: string
+}

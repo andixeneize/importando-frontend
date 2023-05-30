@@ -1,10 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
 import { api, type ISuccessResponse, type IErrorResponse } from '@config/api'
-import type { IFormLogin } from '@schemas/login'
+import type { IFormLogin, IFormRegister } from '@schemas/login'
 
 const URLS = {
 	LOGIN: '/Usuario/Login',
 	FORGOTPWD: '/Usuario/resetPassword',
+	REGISTER: '/Usuario/Create',
 }
 
 // Forgot password
@@ -76,6 +77,13 @@ export const login = async (body: IFormLogin) => {
 		// 	'access-token': data.token,
 		// },
 	})
+	return res
+}
+
+// Register
+
+export const addUser = async (body: IFormRegister) => {
+	const res = await api.post<any>(URLS.REGISTER, body)
 	return res
 }
 
