@@ -17,12 +17,10 @@ type Inputs = {
 
 const Home: NextPage = () => {
   const router = useRouter()
-  // const getPosts = useGetPosts()
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -33,21 +31,26 @@ const Home: NextPage = () => {
     
 		const data = {
 			email: formData.email,
-			password: sha256(formData.password),
+			password: formData.password//sha256(formData.password),
 		}
 
-    login(data).then(res => {
+    login(data).then(async res => {
       if (res.status === 200) {
         console.log('200')
         console.log('response: ', res)
-
-      } else {
+        router.push('/cobros')
+      } else if (res.status === 401) {
+        await sleep(100)
+        alert('Error: incorrect creedentials. ')
+      } 
+      else {
         console.log('login status: ' + res)
+        alert(res)
       }
     })
     .catch(error => {
       console.log('Error: ', error)
-      alert(error)
+      alert('Error: ' + error)
     })
   }
 
@@ -76,7 +79,7 @@ const Home: NextPage = () => {
 		// loginReset()
   }
 
-  
+ 
   return (
     <div className={styles.loginBox}>
       <h1>Iniciar sesión</h1>
