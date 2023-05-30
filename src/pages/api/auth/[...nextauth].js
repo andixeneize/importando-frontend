@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { login } from '@services/login'
 
-export const authOptions = {
+const authOptions = req => ({
 	providers: [
 		CredentialsProvider({
 			type: 'credentials',
@@ -11,15 +11,14 @@ export const authOptions = {
 					email: credentials?.email,
 					password: credentials?.password,
 				}
-
 				return (
 					login(body)
 						.then(res => {
+							console.log('RESPONSE: ', res.data)
+							console.log('STATUS: ', res.status)
 							if (res.status === 200) {
-								console.log('200')
 								const user = {
-									email: res.data.data.email,
-									accessToken: res.data.data.token,
+									accessToken: res.data,
 								}
 								return user
 							} else {
@@ -28,7 +27,7 @@ export const authOptions = {
 						})
 						.catch(error => {
 							console.log('Error: ', error)
-							throw new Error(error.response.data.message)
+							throw new Error(error)
 						}) || null
 				)
 			},
@@ -36,23 +35,26 @@ export const authOptions = {
 	],
 	callbacks: {
 		jwt({ token, user }) {
+			if (req.query.updateToken !== undefined) {
+				token.accessToken = req.query.updateToken
+			}
 			if (user) {
-				token.email = user.email
 				token.accessToken = user.accessToken
 			}
 			return token
 		},
 		session: ({ session, token }) => {
 			if (token) {
-				session.user.email = token.email
 				session.user.accessToken = token.accessToken
 			}
 			return session
 		},
 	},
 	pages: {
-		signIn: '/',
+		signIn: '/login',
 	},
-}
+})
 
-export default NextAuth(authOptions)
+export default async (req, res) => {
+	return NextAuth(req, res, authOptions(req))
+}
