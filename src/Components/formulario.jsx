@@ -87,77 +87,6 @@ const Formulario = () => {
                   placeholder="Ingrese su nombre"
                   {...register("nombre", {
                     required: true,
-<<<<<<< HEAD
-                    pattern:  /^[a-zA\_\-]{4,15}$/,
-                    })} />
-                    {errors.nombre?.type === "required" && <p className={styles.error}>El campo nombre es requerido</p>}
-                    {errors.nombre?.type === "pattern" && <p className={styles.error}>El nombre debe ser de 4 a 15 caracteres y solo contener letras</p>}
-                </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col><div id="ape">
-                    <label htmlFor="">Apellido</label>
-                    <input type="text" placeholder="Ingrese su apellido" {...register("apellido",{
-                    required:true,
-                    pattern:  /^[a-zA\_\-]{4,15}$/,
-                    })}  />
-                    {errors.apellido?.type === "required" && <p className={styles.error}>El campo apellido es requerido</p>}
-                    {errors.apellido?.type === "pattern" && <p className={styles.error}>El nombre debe ser de 4 a 15 caracteres y solo contener letras</p>}
-                </div>
-            </Col>
-            <Col><div id="tel">
-                    <label htmlFor="">Teléfono <small>Formato: 123-456-7890</small></label>
-                    <input type="tel" placeholder="Ingrese su numero de teléfono"  {...register("telefono",{
-                    required:true,
-                    pattern:/[0-9]{3}-[0-9]{3}-[0-9]{4}/,
-                    })}  />
-                    {errors.telefono?.type === "required" && <p className={styles.error}>El numero de teléfono es requerido</p>}
-                    {errors.telefono?.type === "pattern" && <p className={styles.error}>El formato es incorrecto</p>}
-                </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col><div id="em">
-                    <label htmlFor="">Email</label>
-                    <input type="text" placeholder="Ingrese su email"  {...register("email",{
-                    required:true,
-                   pattern: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/    
-                    })}  />
-                    {errors.email?.type === "required" && <p className={styles.error}>El campo email es requerido</p>}
-                    {errors.email?.type === "pattern" && <p className={styles.error}>El formato del email es inválido</p>}
-                </div>
-            </Col>
-            <Col><div id="nac">
-                    <label htmlFor="">Fecha de nacimiento</label>
-                    <input type="date" id="start" name="trip-start" min="1900-01-01" max="2022-12-31"  placeholder="dd/mm/aaaa" {...register("nacimiento",{
-                    required:true,   
-                    })}/>  
-                    {errors.nacimiento?.type === "required" && <p className={styles.error}>El campo fecha de nacimiento es requerido</p>}
-                </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col><div id="pass">
-                    <label htmlFor="">Contraseña</label>
-                    <input type="password" placeholder="Ingrese su contraseña"  {...register("contraseña",{
-                    required:true,
-                    pattern:/^.{4,12}$/,   
-                    })}  />
-                    {errors.contraseña?.type === "required" && <p className={styles.error}>El campo contraseña es requerido</p>}
-                    {errors.contraseña?.type === "pattern" && <p className={styles.error}>La contraseña debe tener entre 4 y 12 caracteres</p>}
-                </div>
-            </Col>
-            <Col><div id="repass">
-                    <label htmlFor="">Repetir contraseña</label>
-                    <input type="password" placeholder="Repita su contraseña" {...register("repetirContraseña",{
-                    required:true,
-                    pattern:/^.{4,12}$/,   
-                    })}  />
-                    {errors.repetirContraseña?.type === "required" && <p className={styles.error}>El campo contraseña es requerido</p>}
-                    {errors.repetirContraseña?.type === "pattern" && <p className={styles.error}>La contraseña debe tener entre 4 y 12 caracteres</p>}
-                </div>
-=======
                     pattern: /^[a-zA\_\-]{4,15}$/,
                   })}
                 />
@@ -171,7 +100,6 @@ const Formulario = () => {
                   </p>
                 )}
               </div>
->>>>>>> 6a362c88282205daaec104b085a05c6ad601d957
             </Col>
           </Row>
           <Row>

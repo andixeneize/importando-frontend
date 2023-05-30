@@ -13,6 +13,7 @@ const Consulta: NextPage = () => {
   async function consultar() {
     await sleep(1000)
     console.log('Consultando...')
+    setLoading(!loading)
   }
 
   let consulta = {
@@ -47,7 +48,7 @@ const Consulta: NextPage = () => {
         </ListGroup>
 
         <Card.Body>
-          <Button variant="secondary" onClick={() => consultar()}>Consultar</Button>
+          <Button variant="secondary" onClick={() => consultar()}>{loading? 'Consultar':'Resetear'}</Button>
         </Card.Body>
       </Card>
 
@@ -60,6 +61,10 @@ const Consulta: NextPage = () => {
         <Card.Header as="h5" className="p-3">Resultados</Card.Header>
 
         {loading && (<ListGroup >
+          <ListGroup.Item variant="dark">No hay datos...</ListGroup.Item>
+        </ListGroup>)}
+
+        {!loading && (<ListGroup >
           <ListGroup.Item variant="dark">Agencia: {consulta.agencia}</ListGroup.Item>
           <ListGroup.Item variant="dark">Clave Externa: {consulta.claveExterna}</ListGroup.Item>
           <ListGroup.Item variant="dark">Datos Extra: {consulta.datosExtra}</ListGroup.Item>
