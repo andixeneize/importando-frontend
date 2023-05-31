@@ -4,9 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import styles from "@styles/consulta.module.css";
-import { sleep } from "@utils/sleep";
 import { useState } from "react";
-import { useGetConsulta } from "@services/consulta";
+import { useGetConsulta, IConsultaResponse } from "@services/consulta";
 import type { ISession } from '@services/login'
 import { getSession } from "next-auth/react";
 
@@ -15,28 +14,46 @@ interface IHome {
 }
 
 const Home: NextPage<IHome> = ({ session }) => {
-  const [loading, setLoading] = useState(true);
-  const getConsulta = useGetConsulta({ token: session.user.accessToken })
-
-  async function consultar() {
-    await sleep(1000)
-    console.log('Consultando...')
-    setLoading(!loading)
-    console.log('Consulta: ', getConsulta)
-  }
-
-  let consulta = {
-    agencia: '001',
-    claveExterna: 'prueba22',
+  const consultaDefaultValues = {
+    agencia: '',
+    claveExterna: '',
     datosExtra: '',
-    errorCodigo: 0,
-    errorDescripcion: null,
+    errorCodigo: '',
+    errorDescripcion: '',
     estadoCodigo: '',
-    estadoDescripcion: null,
-    fecha: '20230327',
+    estadoDescripcion: '',
+    fecha: '',
     fechaEstado: '',
     lugarPersona: '',
-    remito: 319281
+    remito: ''
+  }
+  const [loading, setLoading] = useState(true);
+  const [consulta, setConsulta] = useState(consultaDefaultValues);
+  const getConsulta = useGetConsulta()
+
+
+  async function consultar() {
+    console.log('Consultando...')
+    setLoading(true)
+
+    const body = {
+      cliente: "1112",
+      pwd: "Ag.1234",
+      claveExterna: "prueba22",
+      fecha: "",
+      token: session.user.accessToken,
+    }
+
+    getConsulta.mutate(body, {
+			onSuccess: (res) => {
+        setConsulta(res)
+        console.log('consulta: ', consulta)
+        setLoading(false)
+			},
+      onError: (error) => {
+        console.log('Error: ', error)
+			},
+		})
   }
 
   return (
@@ -57,7 +74,7 @@ const Home: NextPage<IHome> = ({ session }) => {
         </ListGroup>
 
         <Card.Body>
-          <Button variant="secondary" onClick={() => consultar()}>{loading? 'Consultar':'Resetear'}</Button>
+          <Button variant="secondary" onClick={() => consultar()}>Consultar</Button>
         </Card.Body>
       </Card>
 
@@ -73,7 +90,7 @@ const Home: NextPage<IHome> = ({ session }) => {
           <ListGroup.Item variant="dark">No hay datos...</ListGroup.Item>
         </ListGroup>)}
 
-        {!loading && (<ListGroup >
+        { !loading && (<ListGroup >
           <ListGroup.Item variant="dark">Agencia: {consulta.agencia}</ListGroup.Item>
           <ListGroup.Item variant="dark">Clave Externa: {consulta.claveExterna}</ListGroup.Item>
           <ListGroup.Item variant="dark">Datos Extra: {consulta.datosExtra}</ListGroup.Item>

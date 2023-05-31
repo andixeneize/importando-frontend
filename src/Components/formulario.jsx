@@ -4,13 +4,18 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { addUser } from "@services/login";
+import { useRouter } from 'next/router'
 
 const Formulario = () => {
+  const router = useRouter()
+
   const {
     register,
+    reset: registerReset,
     formState: { errors },
     handleSubmit,
   } = useForm({});
+  
 
 
   const onSubmit = async (formData) => {
@@ -29,23 +34,17 @@ const Formulario = () => {
 		}
 
     addUser(body).then(async res => {
-      if (res.status === 200) {
-        console.log('200')
+      if (res.status === 201) {
+        console.log('201')
         console.log('response: ', res)
-      } else if (res.status === 401) {
-        // await sleep(100)
-        // alert('Error: incorrect creedentials. ')
-        console.log('401')
-        console.log('response: ', res)
+        alert('Cuenta creada.')
+        registerReset()
+        router.push('/login')
       } 
-      else {
-        console.log('login status: ' + res)
-        alert(res)
-      }
     })
     .catch(error => {
       console.log('Error: ', error)
-      alert('Error: ' + error)
+      alert(error.response.data)
     })
   }
 
@@ -64,7 +63,7 @@ const Formulario = () => {
                   placeholder="Disabled"
                   {...register("usuario", {
                     required: false,
-                    pattern: /^[a-zA-Z0-9\_\-]{4,15}$/,
+                    // pattern: /^[a-zA-Z0-9\_\-]{4,15}$/,
                     disabled: true
                   })}
                 />
@@ -87,7 +86,7 @@ const Formulario = () => {
                   placeholder="Ingrese su nombre"
                   {...register("nombre", {
                     required: true,
-                    pattern: /^[a-zA\_\-]{4,15}$/,
+                    // pattern: /^[a-zA\_\-]{4,15}$/,
                   })}
                 />
                 {errors.nombre?.type === "required" && (
