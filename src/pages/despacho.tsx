@@ -1,28 +1,31 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "@styles/despacho.module.css";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useGetDespacho } from "@services/despacho";
+import { ISession } from "@services/login";
+import { getSession } from "next-auth/react";
 
 interface IFormInput {
-  cliente: String;
-  pwd: String;
-  generarRemito: String;
-  agenciaOrigen: String;
-  claveExterna: String;
-  tipo: String;
-  producto: String;
-  bultos: String;
-  kilos: String;
-  destinatario: String;
-  direccion: String;
-  localidad: String;
-  rut: String;
-  valorCR: String;
-  facturaCR: String;
-  telefonoDest: String
-  mailDest: String
+  cliente: string;
+  pwd: string;
+  generarRemito: string;
+  agenciaOrigen: string;
+  claveExterna: string;
+  tipo: string;
+  producto: string;
+  bultos: string;
+  kilos: string;
+  destinatario: string;
+  direccion: string;
+  localidad: string;
+  rut: string;
+  valorCR: string;
+  facturaCR: string;
+  telefonoDest: string
+  mailDest: string
 }
 
 /*
@@ -48,12 +51,47 @@ pruebas despacho
 }
 */
 
-const Despacho: NextPage = () => {
+interface IDespacho {
+  session: ISession
+}
+const Despacho: NextPage<IDespacho> = ({ session }) => {
+
   const { register, handleSubmit } = useForm<IFormInput>();
+  const getDespacho = useGetDespacho()
 
   const onSubmit: SubmitHandler<IFormInput> = async (formData) => {
-    console.log('Despacho: Submit')
     console.log(formData);
+    console.log('Despachando...')
+
+    const body = {
+      token: session.user.accessToken,
+      cliente: formData.cliente,
+      pwd: formData.pwd,
+      generarRemito: formData.generarRemito,
+      agenciaOrigen: formData.agenciaOrigen,
+      claveExterna: formData.claveExterna,
+      tipo: formData.tipo,
+      producto: formData.producto,
+      bultos: formData.bultos,
+      kilos: formData.kilos,
+      destinatario: formData.destinatario,
+      direccion: formData.direccion,
+      localidad: formData.localidad,
+      rut: formData.rut,
+      valorCR: "0.0", // formData.valorCR,
+      facturaCR: "1", // formData.facturaCR,
+      telefonoDest: formData.telefonoDest,
+      mailDest: formData.mailDest
+    }
+
+    getDespacho.mutate(body, {
+			onSuccess: (res) => {
+        console.log('response: ', res)
+			},
+      onError: (error) => {
+        console.log('Error: ', error)
+			},
+		})
   }
 
   return (
@@ -160,3 +198,23 @@ const Despacho: NextPage = () => {
 };
 
 export default Despacho;
+
+
+export const getServerSideProps: GetServerSideProps = async context => {
+	const session = (await getSession(context)) as ISession
+
+	if (session === null) {
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false,
+			},
+		}
+	}
+
+	return {
+		props: {
+			session,
+		},
+	}
+}
