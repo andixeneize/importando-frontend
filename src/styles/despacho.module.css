@@ -5,8 +5,10 @@
     position: absolute;
     transform: translate(-50%, -50%);
     background-color: rgba(24, 20, 20, 0.849);
-    width: 60%;
-    height: 80%;
+    width: 80%;
+    min-width: 640px;
+    max-width: 1024px;
+    height: auto;
     color: #fff;
     display: flex;
     flex-direction: column;
