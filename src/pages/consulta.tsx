@@ -1,0 +1,112 @@
+import type { NextPage } from "next";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from 'next/router'
+import styles from "@styles/index.module.css";
+import Button from 'react-bootstrap/Button';
+import { login } from "@services/login";
+import { sleep } from "@utils/sleep";
+import { signIn } from 'next-auth/react'
+var sha256 = require('sha-256-js');
+
+
+type Inputs = {
+  email: string;
+  password: string;
+  // remember: boolean;
+};
+
+const Home: NextPage = () => {
+  const router = useRouter()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+
+  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
+    console.log('Submit')
+    console.log(formData);
+    
+		const data = {
+			email: formData.email,
+			password: formData.password//sha256(formData.password),
+		}
+
+    login(data).then(async res => {
+      if (res.status === 200) {
+        console.log('200')
+        console.log('response: ', res)
+        router.push('/cobros')
+        router.push('/consulta')
+      } else if (res.status === 401) {
+        await sleep(100)
+        alert('Error: incorrect creedentials. ')
+      } 
+      else {
+        console.log('login status: ' + res)
+        alert(res)
+      }
+    })
+    .catch(error => {
+      console.log('Error: ', error)
+      alert('Error: ' + error)
+    })
+  }
+
+  const onSubmit2: SubmitHandler<Inputs> = async (formData) => {
+    console.log('Submit')
+    console.log(formData);
+    
+		// setIsSubmitting(true)
+		const login = await signIn('credentials', {
+			email: formData.email,
+			password: formData.password, //sha256(formData.password),
+			locale: router.locale,
+			redirect: false,
+		})
+
+		if (login?.status === 401) {
+			// setIsSubmitting(false)
+			await sleep(100)
+			// snackbar(login.error ?? t('LOGIN_INCORRECT_CREDENTIALS'), 'failure')
+      alert('Error: incorrect creedentials. ' + login.error)
+			// setUserFocus()
+		} else if (login?.status === 200) {
+			// setIsSubmitting(false)
+			router.push('/cobros')
+		}
+		// loginReset()
+  }
+
+ 
+  return (
+    <div className={styles.loginBox}>
+      <h1>Iniciar sesión</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        
+          <label htmlFor="UserName">Email</label>
+          <input type="text" placeholder="Ingrese su email" {...register("email", { required: true })} />
+          {errors.email && <span className={styles.error}>Este campo es obligatorio</span>}
+    
+
+        
+          <label htmlFor="password">Contraseña</label>
+          <input type="password" placeholder="Ingrese su contraseña" {...register("password", { required: true })} />
+          {errors.password && <div className={styles.error}>Este campo es obligatorio</div>}
+        
+       
+          <input type="submit" value="Ingresar" />
+          
+          <div className={styles.botonera}>
+            <Button variant="link" className={styles.navButton} onClick={() => router.push('/registro')}>Crear una nueva cuenta</Button>
+            <Button variant="link" className={styles.navButton} onClick={() => router.push('/recuperacion')}>Olvide mi contraseña</Button>  
+        </div>
+      </form>
+    </div>
+  );
+
+};
+
+export default Home;
