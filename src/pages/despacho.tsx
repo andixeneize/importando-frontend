@@ -58,7 +58,7 @@ const Despacho: NextPage = () => {
 
   return (
     <div className={styles.despachoBox}>
-      <h1>Despachar</h1> 
+      <h1 className="mt-3">Despachar</h1> 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container>
           <Row>
@@ -144,7 +144,7 @@ const Despacho: NextPage = () => {
             </Col>
             <Col></Col>
           </Row>
-          <Row>
+          <Row className="mt-3">
             <Col>
                 <input type="submit" value="Enviar"/> 
             </Col>

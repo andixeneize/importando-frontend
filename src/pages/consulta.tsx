@@ -1,112 +1,153 @@
-import type { NextPage } from "next";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from 'next/router'
-import styles from "@styles/index.module.css";
+import type { GetServerSideProps, NextPage } from "next";
+import * as React from 'react';
 import Button from 'react-bootstrap/Button';
-import { login } from "@services/login";
-import { sleep } from "@utils/sleep";
-import { signIn } from 'next-auth/react'
-var sha256 = require('sha-256-js');
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import styles from "@styles/consulta.module.css";
+import { useState } from "react";
+import { useGetConsulta, IConsultaResponse } from "@services/consulta";
+import type { ISession } from '@services/login'
+import { getSession } from "next-auth/react";
 
+interface IConsulta {
+  session: ISession
+}
 
-type Inputs = {
-  email: string;
-  password: string;
-  // remember: boolean;
-};
-
-const Home: NextPage = () => {
-  const router = useRouter()
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
-
-
-  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
-    console.log('Submit')
-    console.log(formData);
-    
-		const data = {
-			email: formData.email,
-			password: formData.password//sha256(formData.password),
-		}
-
-    login(data).then(async res => {
-      if (res.status === 200) {
-        console.log('200')
-        console.log('response: ', res)
-        router.push('/cobros')
-        router.push('/consulta')
-      } else if (res.status === 401) {
-        await sleep(100)
-        alert('Error: incorrect creedentials. ')
-      } 
-      else {
-        console.log('login status: ' + res)
-        alert(res)
-      }
-    })
-    .catch(error => {
-      console.log('Error: ', error)
-      alert('Error: ' + error)
-    })
+const Consulta: NextPage<IConsulta> = ({ session }) => {
+  const consultaDefaultValues = {
+    agencia: '',
+    claveExterna: '',
+    datosExtra: '',
+    errorCodigo: '',
+    errorDescripcion: '',
+    estadoCodigo: '',
+    estadoDescripcion: '',
+    fecha: '',
+    fechaEstado: '',
+    lugarPersona: '',
+    remito: ''
   }
+  const [loading, setLoading] = useState(true);
+  const [consulta, setConsulta] = useState(consultaDefaultValues);
+  const getConsulta = useGetConsulta()
 
-  const onSubmit2: SubmitHandler<Inputs> = async (formData) => {
-    console.log('Submit')
-    console.log(formData);
-    
-		// setIsSubmitting(true)
-		const login = await signIn('credentials', {
-			email: formData.email,
-			password: formData.password, //sha256(formData.password),
-			locale: router.locale,
-			redirect: false,
+
+  async function consultar() {
+    console.log('Consultando...')
+    setLoading(true)
+
+    const body = {
+      cliente: "1112",
+      pwd: "Ag.1234",
+      claveExterna: "prueba22",
+      fecha: "",
+      token: session.user.accessToken,
+    }
+
+    getConsulta.mutate(body, {
+			onSuccess: (res) => {
+        setConsulta(res)
+        console.log('consulta: ', consulta)
+        setLoading(false)
+			},
+      onError: (error) => {
+        console.log('Error: ', error)
+			},
 		})
-
-		if (login?.status === 401) {
-			// setIsSubmitting(false)
-			await sleep(100)
-			// snackbar(login.error ?? t('LOGIN_INCORRECT_CREDENTIALS'), 'failure')
-      alert('Error: incorrect creedentials. ' + login.error)
-			// setUserFocus()
-		} else if (login?.status === 200) {
-			// setIsSubmitting(false)
-			router.push('/cobros')
-		}
-		// loginReset()
   }
 
- 
   return (
-    <div className={styles.loginBox}>
-      <h1>Iniciar sesión</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        
-          <label htmlFor="UserName">Email</label>
-          <input type="text" placeholder="Ingrese su email" {...register("email", { required: true })} />
-          {errors.email && <span className={styles.error}>Este campo es obligatorio</span>}
-    
+    <div className={styles.container}>
+      <Card
+        bg="dark"
+        key="consultar"
+        text="white"
+        style={{ width: '24rem' }}
+        className="m-5">
+        <Card.Header as="h5" className="p-3">Consultas</Card.Header>
 
-        
-          <label htmlFor="password">Contraseña</label>
-          <input type="password" placeholder="Ingrese su contraseña" {...register("password", { required: true })} />
-          {errors.password && <div className={styles.error}>Este campo es obligatorio</div>}
-        
-       
-          <input type="submit" value="Ingresar" />
-          
-          <div className={styles.botonera}>
-            <Button variant="link" className={styles.navButton} onClick={() => router.push('/registro')}>Crear una nueva cuenta</Button>
-            <Button variant="link" className={styles.navButton} onClick={() => router.push('/recuperacion')}>Olvide mi contraseña</Button>  
-        </div>
-      </form>
+        <ListGroup >
+          <ListGroup.Item variant="dark">Cliente: 1112</ListGroup.Item>
+          <ListGroup.Item variant="dark">Password: *******</ListGroup.Item>
+          <ListGroup.Item variant="dark">Clave Externa ********</ListGroup.Item>
+          <ListGroup.Item variant="dark">Fecha: -</ListGroup.Item>
+        </ListGroup>
+
+        <Card.Body>
+          <Button variant="secondary" onClick={() => consultar()}>Consultar</Button>
+        </Card.Body>
+      </Card>
+
+      <Card
+        bg="dark"
+        key="resultado-consulta"
+        text="white"
+        style={{ width: '24rem' }}
+        className="m-5">
+        <Card.Header as="h5" className="p-3">Resultados</Card.Header>
+
+        {loading && (<ListGroup >
+          <ListGroup.Item variant="dark">No hay datos...</ListGroup.Item>
+        </ListGroup>)}
+
+        { !loading && (<ListGroup >
+          <ListGroup.Item variant="dark">Agencia: {consulta.agencia}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Clave Externa: {consulta.claveExterna}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Datos Extra: {consulta.datosExtra}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Error Codigo: {consulta.errorCodigo}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Error Descripcion: {consulta.errorDescripcion}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Estado Codigo: {consulta.estadoCodigo}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Estado Descripcion: {consulta.estadoDescripcion}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Fecha: {consulta.fecha}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Fecha Estado: {consulta.fechaEstado}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Lugar Persona: {consulta.lugarPersona}</ListGroup.Item>
+          <ListGroup.Item variant="dark">Remito: {consulta.remito}</ListGroup.Item>
+        </ListGroup>)}
+      </Card>
     </div>
   );
-
 };
 
-export default Home;
+export default Consulta;
+
+export const getServerSideProps: GetServerSideProps = async context => {
+	const session = (await getSession(context)) as ISession
+
+	if (session === null) {
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false,
+			},
+		}
+	}
+
+	return {
+		props: {
+			session,
+		},
+	}
+}
+
+
+/*
+{
+  "cliente": "1112",
+  "pwd": "Ag.1234",
+  "claveExterna": "prueba22",
+  "fecha": ""
+}
+{
+  "agencia": "001",
+  "claveExterna": "prueba22                                          ",
+  "datosExtra": "",
+  "errorCodigo": "0",
+  "errorDescripcion": null,
+  "estadoCodigo": "",
+  "estadoDescripcion": null,
+  "fecha": "20230327",
+  "fechaEstado": "",
+  "lugarPersona": "",
+  "remito": "319281"
+}
+*/
