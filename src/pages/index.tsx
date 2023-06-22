@@ -1,7 +1,11 @@
 import type { NextPage } from 'next'
+import Cards from "../Components/cards";
 
 const Home: NextPage = () => {
-	return <div>Cobros</div>
+	return <Cards/>
+	
+	 
+	
 }
 
 export default Home;
