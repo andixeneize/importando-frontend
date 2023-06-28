@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useGetConsulta, IConsultaResponse } from "@services/consulta";
 import type { ISession } from '@services/login'
 import { getSession } from "next-auth/react";
+import BarraNav from "../Components/navbar";
 
 interface IConsulta {
   session: ISession
@@ -57,7 +58,9 @@ const Consulta: NextPage<IConsulta> = ({ session }) => {
   }
 
   return (
+    
     <div className={styles.container}>
+      <BarraNav/>
       <Card
         bg="dark"
         key="consultar"

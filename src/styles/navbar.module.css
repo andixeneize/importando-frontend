@@ -1,0 +1,14 @@
+.container{
+    background-color: rgba(100, 126, 182, 0.822);
+    border: solid 2px rgba(7, 6, 6, 0.726);
+    width: 40%;
+    
+}
+
+.option{
+    width: 50%;
+}
+
+.option:hover{
+    background-color: rgb(147, 172, 204);
+}

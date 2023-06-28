@@ -1,8 +1,12 @@
 import type { NextPage } from 'next'
 import Cards from "../Components/cards";
+import BarraNav from "../Components/navbar";
 
 const Home: NextPage = () => {
-	return <Cards/>
+	return <div><BarraNav/> 
+	<Cards/>
+	</div>;
+	
 	
 	 
 	

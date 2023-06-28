@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { useGetDespacho } from "@services/despacho";
 import { ISession } from "@services/login";
 import { getSession } from "next-auth/react";
+import BarraNav from "../Components/navbar";
 
 interface IFormInput {
   cliente: string;
@@ -95,6 +96,8 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
   }
 
   return (
+    <div>
+      <BarraNav/>
     <div className={styles.despachoBox}>
       <h1 className="mt-3">Despachar</h1> 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -192,6 +195,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
           </Row>
         </Container>
       </form>
+      </div>
       </div>
     
   );

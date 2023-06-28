@@ -18,7 +18,7 @@ function Cards (){
               </div>
               <div className={styles.card}>
                   <img src="Imagenes/perfil2.png" alt="" width="100px" />
-                  <a href="">Perfil</a>
+                  <a href="/perfil">Perfil</a>
               </div>
             </div>
   )
