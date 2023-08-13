@@ -14,8 +14,6 @@ const authOptions = req => ({
 				return (
 					login(body)
 						.then(res => {
-							console.log('RESPONSE: ', res.data)
-							console.log('STATUS: ', res.status)
 							if (res.status === 200) {
 								const user = {
 									accessToken: res.data,
@@ -47,6 +45,7 @@ const authOptions = req => ({
 			if (token) {
 				session.user.accessToken = token.accessToken
 			}
+
 			return session
 		},
 	},

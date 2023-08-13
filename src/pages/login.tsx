@@ -7,6 +7,7 @@ import { sleep } from "@utils/sleep";
 import { signIn } from 'next-auth/react'
 var sha256 = require('sha-256-js');
 import { signOut } from 'next-auth/react'
+import { Session } from 'inspector';
 
 
 type Inputs = {
@@ -28,7 +29,6 @@ const Login: NextPage = () => {
 
   const onSubmitLogin = handleLoginSubmit(async (formData) => {
     console.log('Submit')
-    console.log(formData);
     
 		const login = await signIn('credentials', {
 			email: formData.email,

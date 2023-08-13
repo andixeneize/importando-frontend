@@ -8,6 +8,10 @@ import { useGetDespacho } from "@services/despacho";
 import { ISession } from "@services/login";
 import { getSession } from "next-auth/react";
 import BarraNav from "../Components/navbar";
+import { useGetBultos } from "@services/bulto";
+import { useGetZonas } from "@services/zona";
+import { useEffect, useState } from "react";
+import Select from 'react-select'
 
 interface IFormInput {
   cliente: string;
@@ -29,36 +33,16 @@ interface IFormInput {
   mailDest: string
 }
 
-/*
-pruebas despacho
-{
-  "cliente": "1414",
-  "pwd": "1414",
-  "generarRemito": "N",
-  "agenciaOrigen": "001",
-  "claveExterna": "TestTestTest",
-  "tipo": "C",
-  "producto": "2",
-  "bultos": 1,
-  "kilos": 1,
-  "destinatario": "aaaaaa",
-  "direccion": "bbbbbb",
-  "localidad": "maldonado",
-  "rut": "213456777",
-  "valorCR": 0.0,
-  "facturaCR": "1",
-  "telefonoDest": "11111111",
-  "mailDest": "fake@email.com"
-}
-*/
-
 interface IDespacho {
   session: ISession
 }
 const Despacho: NextPage<IDespacho> = ({ session }) => {
-
   const { register, handleSubmit } = useForm<IFormInput>();
   const getDespacho = useGetDespacho()
+  const getZonas = useGetZonas({ token: session.user.accessToken })
+  const getBultos = useGetBultos({ token: session.user.accessToken })
+  const [options, setOptions] = useState([]);
+
 
   const onSubmit: SubmitHandler<IFormInput> = async (formData) => {
     console.log(formData);
@@ -94,6 +78,19 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 			},
 		})
   }
+
+  const { refetch } = getBultos
+
+	useEffect(() => {
+		refetch().then((res) => {
+      const selectOptions = res.data?.map(
+        (option: any) => {
+          return ({ label: option.descripcion, value: option.idBulto})
+        }
+      )
+      setOptions(selectOptions)
+    })
+	}, [refetch])
 
   return (
     <div>
@@ -135,7 +132,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
             </Col>
             <Col>
                 <label >Bultos</label>
-                <input type="number" {...register("bultos")} />
+                <Select options={options} />
             </Col>
           </Row>
           <Row>

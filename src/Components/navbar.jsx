@@ -10,7 +10,7 @@ function BarraNav() {
   return (
       <Navbar>
         <Container className={styles.container}>
-          <Navbar.Brand href="/home">Home</Navbar.Brand>
+          <Navbar.Brand href="/">Home</Navbar.Brand>
           <Nav className={styles.nav}>
             <Nav.Link className={styles.option} href="/despacho">Despacho</Nav.Link>
             <Nav.Link className={styles.option} href="/consulta">Consulta</Nav.Link>

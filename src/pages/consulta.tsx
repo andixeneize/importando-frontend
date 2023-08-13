@@ -153,4 +153,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
   "lugarPersona": "",
   "remito": "319281"
 }
+
+Consulta:
+ingresar fecha y clave externa
+
+Usuario y pass depende la cuenta:
+Si tiene que lo ingrese
+
 */
