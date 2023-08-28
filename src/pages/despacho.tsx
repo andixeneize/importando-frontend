@@ -123,7 +123,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
           bg="dark"
           key="consultar"
           text="white"
-          style={{ width: '36rem', height: 'fit-content' }}
+          style={{ width: '32rem', height: 'fit-content' }}
           className="m-5">
           <Card.Header as="h5" className="p-3">Despachar</Card.Header>
 
@@ -227,7 +227,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
           bg="dark"
           key="resultado-consulta"
           text="white"
-          style={{ width: '24rem', height: 'fit-content' }}
+          style={{ width: '32rem', height: 'fit-content' }}
           className="m-5">
           <Card.Header as="h5" className="p-3">Resultados</Card.Header>
 
@@ -236,7 +236,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
           </ListGroup>)}
 
           { !loading && (<ListGroup >
-            <ListGroup.Item variant="dark" style={{ width: '24rem', height: 'fit-content' }}>
+            <ListGroup.Item variant="dark" style={{ width: '32rem', height: 'fit-content' }}>
               <div>Despacho: </div>
               <div>
                 <pre>
