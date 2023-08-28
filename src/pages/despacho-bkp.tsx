@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import toast, { Toaster } from "react-hot-toast";
-import { Card, ListGroup } from "react-bootstrap";
 
 interface IFormInput {
   cliente: string;
@@ -46,8 +45,6 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
   const getZonas = useGetZonas({ token: session.user.accessToken });
   const getBultos = useGetBultos({ token: session.user.accessToken });
   const [options, setOptions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [consulta, setConsulta] = useState('');
 
   const notifySuccess = (text: string) =>
     toast.success(text, {
@@ -87,15 +84,11 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
     getDespacho.mutate(body, {
       onSuccess: (res) => {
         console.log("Despacho exitoso: ", res);
-        notifySuccess('Consulta exitosa')
-        setConsulta(JSON.stringify(res, null, 2))
-        setLoading(false)
+        notifySuccess("Código de barra: " + res.codigoBarra);
       },
       onError: (error) => {
         console.log("Error de despacho");
         notifyError(error.response?.data?.title || "Error");
-        setConsulta('')
-        setLoading(true)
       },
     });
   };
@@ -118,134 +111,105 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
   return (
     <div>
       <BarraNav />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Card
-          bg="dark"
-          key="consultar"
-          text="white"
-          style={{ width: '36rem', height: 'fit-content' }}
-          className="m-5">
-          <Card.Header as="h5" className="p-3">Despachar</Card.Header>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <ListGroup>
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Generar Remito</div>
+      <div className={styles.despachoBox}>
+        <h1 className="mt-3">Despachar</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Container>
+            <Row>
+              <Col>
+                <label>Generar Remito</label>
                 <select {...register("generarRemito")}>
                   <option value="N">No</option>
                   <option value="S">Si</option>
                 </select>
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Modo de pago</div>
+              </Col>
+              <Col>
+                <label>Modo de pago</label>
                 <select {...register("tipo")}>
                   <option value="C">Crédito (Mercado Pago)</option>
                   <option value="A">A cobrar en destino</option>
                 </select>
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Localidad</div>
-                <input {...register("localidad")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Clave Externa</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Clave Externa</label>
                 <input {...register("claveExterna")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Agencia de origen</div>
+              </Col>
+              <Col>
+                <label>Agencia de origen</label>
                 <input {...register("agenciaOrigen")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Producto</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Producto</label>
                 <input {...register("producto")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Bultos</div>
+              </Col>
+              <Col>
+                <label>Bultos</label>
                 <Select options={options} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Kilos</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Kilos</label>
                 <input type="number" {...register("kilos")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Destinatario</div>
+              </Col>
+              <Col>
+                <label>Destinatario</label>
                 <input {...register("destinatario")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Dirección</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Dirección</label>
                 <input {...register("direccion")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Destinatario</div>
-                <input {...register("destinatario")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Telefono destinatario</div>
+              </Col>
+              <Col>
+                <label>Localidad</label>
+                <input {...register("localidad")} />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Telefono destinatario</label>
                 <input {...register("telefonoDest")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Email destinatario</div>
+              </Col>
+              <Col>
+                <label>Email destinatario</label>
                 <input {...register("mailDest")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-              <div className="mb-1">Cliente</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Cliente</label>
                 <input {...register("cliente")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Password</div>
+              </Col>
+              <Col>
+                <label>Password</label>
                 <input {...register("pwd")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">RUT</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>RUT</label>
                 <input {...register("rut")} />
-              </ListGroup.Item>
-            </ListGroup>
-
-            <Card.Body>
-              <Button variant="secondary" type="button" onClick={onReset} className="mx-3">Borrar</Button>
-              <Button variant="primary" type="submit">Despachar</Button>
-            </Card.Body>
-          </form>
-        </Card>
-
-        <Card
-          bg="dark"
-          key="resultado-consulta"
-          text="white"
-          style={{ width: '24rem', height: 'fit-content' }}
-          className="m-5">
-          <Card.Header as="h5" className="p-3">Resultados</Card.Header>
-
-          {loading && (<ListGroup >
-            <ListGroup.Item variant="dark">No hay datos...</ListGroup.Item>
-          </ListGroup>)}
-
-          { !loading && (<ListGroup >
-            <ListGroup.Item variant="dark" style={{ width: '24rem', height: 'fit-content' }}>
-              <div>Despacho: </div>
-              <div>
-                <pre>
-                  {consulta}
-                </pre>
-              </div>
-            </ListGroup.Item>
-          </ListGroup>)}
-        </Card>
+              </Col>
+              <Col></Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <input type="submit" value="Enviar" />
+              </Col>
+              <Col>
+                <Button onClick={() => notifySuccess("Notifcation")}>
+                  Notificar
+                </Button>
+              </Col>
+            </Row>
+          </Container>
+        </form>
       </div>
       <Toaster />
     </div>
