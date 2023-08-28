@@ -18,6 +18,7 @@
     "next-auth": "^4.20.1",
     "react-bootstrap": "^2.7.2",
     "react-hook-form": "^7.43.2",
+    "react-hot-toast": "^2.4.1",
     "react-select": "^5.7.4",
     "sha-256-js": "^1.0.3",
     "yup": "^1.0.2"

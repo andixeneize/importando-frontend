@@ -7,7 +7,7 @@ import { sleep } from "@utils/sleep";
 import { signIn } from 'next-auth/react'
 var sha256 = require('sha-256-js');
 import { signOut } from 'next-auth/react'
-import { Session } from 'inspector';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 type Inputs = {
@@ -26,10 +26,15 @@ const Login: NextPage = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
+  const notifySuccess = (text: string) => toast.success(text, {
+    position: 'top-right',
+  });
 
-  const onSubmitLogin = handleLoginSubmit(async (formData) => {
-    console.log('Submit')
-    
+  const notifyError = (text: string) => toast.error(text, {
+    position: 'top-right',
+  });
+
+  const onSubmitLogin = handleLoginSubmit(async (formData) => {    
 		const login = await signIn('credentials', {
 			email: formData.email,
 			password: formData.password, //sha256(formData.password),
@@ -37,12 +42,12 @@ const Login: NextPage = () => {
 			redirect: false,
 		})
 
-
 		if (login?.status === 401) {
 			await sleep(100)
-      alert('Error: incorrect creedentials. ')
+      notifyError('Error de credenciales')
 		} else if (login?.status === 200) {
-      router.push('/')
+      notifySuccess('Login exitoso')
+      router.push('/consulta')
 		}
 
 		loginReset()
@@ -56,13 +61,10 @@ const Login: NextPage = () => {
           <label htmlFor="UserName">Email</label>
           <input type="text" placeholder="Ingrese su email" {...register("email", { required: true })} />
           {errors.email && <span className={styles.error}>Este campo es obligatorio</span>}
-    
-
-        
+  
           <label htmlFor="password">Contraseña</label>
           <input type="password" placeholder="Ingrese su contraseña" {...register("password", { required: true })} />
           {errors.password && <div className={styles.error}>Este campo es obligatorio</div>}
-        
        
           <input type="submit" value="Ingresar" />
           
@@ -72,6 +74,7 @@ const Login: NextPage = () => {
             <Button variant="link" className={styles.navButton} onClick={() => signOut()}>Desconectarse</Button>  
         </div>
       </form>
+      <Toaster />
     </div>
   );
 
