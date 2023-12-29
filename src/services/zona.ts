@@ -32,7 +32,7 @@ export const useGetZonas = (body: IZonasRequest) => {
 		{
 			retry: false,
 			onError: error => {
-				console.log(error.response?.data?.message ?? 'Error', 'failure')
+				console.log('Error al obtener zonas: ', error)
 			},
 		}
 	)

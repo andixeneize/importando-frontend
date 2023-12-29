@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { api, type ISuccessResponse, type IErrorResponse } from "@config/api";
 
 const URLS = {
-  BULTOS: "/Bulto/GetBultos",
+  BULTOS: "/Bulto/GetBulto",
   BULTOS_USER: "/Bulto/GetBultoByUsuario",
+  BULTOS_ADD: "/Bulto/AddBulto"
 };
 
 export interface IBultosRequest {
@@ -19,7 +20,8 @@ export interface IBulto {
   descripcion: string;
 }
 
-export const getBultos = async (body: IBultosRequest) => {
+// Para Admin
+export const getBulto = async (body: IBultosRequest) => {
   const { data } = await api.get<any>(URLS.BULTOS, {
     headers: {
       Authorization: body.token,
@@ -28,10 +30,10 @@ export const getBultos = async (body: IBultosRequest) => {
   return data;
 };
 
-export const useGetBultos = (body: IBultosRequest) => {
+export const useGetBulto = (body: IBultosRequest) => {
   return useQuery<any, IErrorResponse<string>, any>(
     ["BULTOS"],
-    async () => await getBultos(body),
+    async () => await getBulto(body),
     {
       retry: false,
       onError: (error) => {
@@ -41,6 +43,7 @@ export const useGetBultos = (body: IBultosRequest) => {
   );
 };
 
+// Para usuario segun plan y usuario
 export const getBultosUser = async (body: IBultosRequest) => {
   const { data } = await api.get<any>(URLS.BULTOS_USER, {
     headers: {
@@ -62,3 +65,37 @@ export const useGetBultosUser = (body: IBultosRequest) => {
     }
   );
 };
+
+export interface IBultoAddRequest {
+	idBultoMirTrans: number
+	token: string
+  descripcion: string
+  planPremium: boolean
+  planBase: boolean
+  activo: boolean
+}
+
+const addBulto = async (body: IBultoAddRequest) => {
+	const { token, ...restOfBody } = body
+	const { data } = await api.post<any>(URLS.BULTOS_ADD, restOfBody, {
+		headers: {
+			Authorization: token,
+		},
+	})
+	return data
+}
+
+export const useAddBulto = () => {
+	return useMutation<any, IErrorResponse<IBultoAddRequest>, IBultoAddRequest>(
+		['ADD_BULTO'],
+		addBulto,
+		{
+			onError: error => {
+				console.log('Error al agregar bulto', error)
+			},
+			onSuccess: res => {
+				console.log('Bulto agregado', res)
+			},
+		}
+	)
+}

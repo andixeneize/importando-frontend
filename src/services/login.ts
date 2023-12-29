@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { api, type ISuccessResponse, type IErrorResponse } from '@config/api'
 import type { IFormLogin, IFormRegister } from '@schemas/login'
 
@@ -6,6 +6,7 @@ const URLS = {
 	LOGIN: '/Usuario/Login',
 	FORGOTPWD: '/Usuario/resetPassword',
 	REGISTER: '/Usuario/Create',
+	LOGGED: '/Usuario/GetUsuarioLogueado',
 }
 
 // Forgot password
@@ -35,7 +36,7 @@ export const usePostForgotPwd = () => {
 		postForgotPwd,
 		{
 			onError: error => {
-				alert('Error: ' + error.response?.data.message)
+				alert('Error: ' + error)
 			},
 		}
 	)
@@ -87,3 +88,28 @@ export const addUser = async (body: IFormRegister) => {
 	return res
 }
 
+export interface IRequest {
+  token: string;
+}
+
+export const getLogged = async (body: IRequest) => {
+  const { data } = await api.get<any>(URLS.LOGGED, {
+    headers: {
+      Authorization: body.token,
+    },
+  });
+  return data;
+};
+
+export const useGetLogged = (body: IRequest) => {
+  return useQuery<any, IErrorResponse<string>, any>(
+    ["LOGGED"],
+    async () => await getLogged(body),
+    {
+      retry: false,
+      onError: (error) => {
+        console.log("Error al obtener el usuario: ", error);
+      },
+    }
+  );
+};

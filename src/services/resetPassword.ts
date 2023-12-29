@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { api, type IResponseError } from '@config/api'
-import { useSnackbar } from '@contexts/Snackbar'
+import { api, type IErrorResponse } from '@config/api'
 
 const URLS = {
 	RESET_PWD: 'users/reset_password',
@@ -36,13 +35,12 @@ export const putResetPwd = async (body: IReqResetPwd) => {
 }
 
 export const useResetPassword = () => {
-	const { snackbar } = useSnackbar()
-	return useMutation<IResResetPwd, IResponseError<IReqResetPwd>, IReqResetPwd>(
+	return useMutation<IResResetPwd, IErrorResponse<IReqResetPwd>, IReqResetPwd>(
 		['PUT_RESET_PWD'],
 		putResetPwd,
 		{
 			onError: error => {
-				snackbar(error.response?.data.error ?? 'Error', 'failure')
+				console.log('Error reset: ', error)
 			},
 		}
 	)

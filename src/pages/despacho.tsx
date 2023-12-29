@@ -1,14 +1,10 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { useForm, SubmitHandler } from "react-hook-form";
-import styles from "@styles/despacho.module.css";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { useGetDespacho } from "@services/despacho";
 import { ISession } from "@services/login";
 import { getSession } from "next-auth/react";
 import BarraNav from "../Components/navbar";
-import { useGetBultos } from "@services/bulto";
+import { useGetBultosUser } from "@services/bulto";
 import { useGetZonas } from "@services/zona";
 import { useEffect, useState } from "react";
 import Select from "react-select";
@@ -44,7 +40,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
   const { register, handleSubmit, reset } = useForm<IFormInput>();
   const getDespacho = useGetDespacho();
   const getZonas = useGetZonas({ token: session.user.accessToken });
-  const getBultos = useGetBultos({ token: session.user.accessToken });
+  const getBultos = useGetBultosUser({ token: session.user.accessToken });
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [consulta, setConsulta] = useState('');
@@ -62,6 +58,9 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
   const onSubmit: SubmitHandler<IFormInput> = async (formData) => {
     console.log("Despachando...");
     console.log(formData);
+
+    console.log('Bultos del form: ', options)
+    console.log('Bulto elegido: ', formData.bultos)
 
     const body = {
       token: session.user.accessToken,
@@ -109,7 +108,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
   useEffect(() => {
     refetch().then((res) => {
       const selectOptions = res.data?.map((option: any) => {
-        return { label: option.descripcion, value: option.idBulto };
+        return { label: option.descripcion, value: option.idBultoMirTrans };
       });
       setOptions(selectOptions);
     });
@@ -140,14 +139,14 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
               <ListGroup.Item variant="dark" className="pb-3" >
                 <div className="mb-1">Modo de pago</div>
                 <select {...register("tipo")}>
-                  <option value="C">Crédito (Mercado Pago)</option>
-                  <option value="A">A cobrar en destino</option>
+                  <option value="C">Crédito - "C"</option>
+                  <option value="A">A cobrar en destino - "A"</option>
                 </select>
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3" >
                 <div className="mb-1">Localidad</div>
-                <input {...register("localidad")} />
+                <input {...register("localidad")} placeholder="Maldonado" />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3" >
@@ -162,12 +161,14 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 
               <ListGroup.Item variant="dark" className="pb-3" >
                 <div className="mb-1">Producto</div>
-                <input {...register("producto")} />
+                <input {...register("producto")} placeholder="Tipo de bulto" />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3" >
                 <div className="mb-1">Bultos</div>
-                <Select options={options} />
+                <input {...register("bultos")} placeholder="Cantidad de bultos" />
+
+                {/* <Select options={options} /> */}
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3" >
@@ -183,11 +184,6 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
               <ListGroup.Item variant="dark" className="pb-3" >
                 <div className="mb-1">Dirección</div>
                 <input {...register("direccion")} />
-              </ListGroup.Item>
-
-              <ListGroup.Item variant="dark" className="pb-3" >
-                <div className="mb-1">Destinatario</div>
-                <input {...register("destinatario")} />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3" >
