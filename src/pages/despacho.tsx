@@ -53,7 +53,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 
   const { register, handleSubmit, reset } = useForm<IFormInput>();
   const getDespacho = useGetDespacho();
-  const getZonas = useGetZonas({ token: session.user.accessToken });
+  // const getZonas = useGetZonas({ token: session.user.accessToken });
   const getBultos = useGetBultosUser({ token: session.user.accessToken });
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -101,7 +101,6 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
       onSuccess: (res) => {
         console.log("Despacho exitoso: ", res);
         notifySuccess("Consulta exitosa");
-        // setConsulta(JSON.stringify(res, null, 2))
         setConsulta(res);
         setLoading(false);
       },
