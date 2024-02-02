@@ -2,11 +2,13 @@
     background-color: rgba(100, 126, 182, 0.822);
     border: solid 2px rgba(7, 6, 6, 0.726);
     width: 40%;
-    
+    color: black;
 }
 
 .option{
     width: 50%;
+    color: black;
+    font-size: 18px;
 }
 
 .option:hover{
