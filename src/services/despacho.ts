@@ -29,9 +29,16 @@ export interface IDespachoRequest {
 export interface IDespachoResponse extends ISuccessResponse {
 	agencia: string
 	codigoBarra: string
-	errorCodigo: string
+	errorCodigo: number
 	errorDescripcion: string
 	etiqueta: string
+	fechaHora: string
+	fecha: string
+	fechaHorayyyyMMddHHmmss: string
+	idDespacho: string
+	localidadDestinoTiempost: string
+	precio: string
+	remito: string
 }
 
 export const getDespacho = async (body: IDespachoRequest) => {
