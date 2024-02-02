@@ -166,39 +166,49 @@ const Consulta: NextPage<IConsulta> = ({ session }) => {
 
           {!loading && (
             <ListGroup>
-              <ListGroup.Item variant="dark">
-                Agencia: {consulta.agencia}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Clave Externa: {consulta.claveExterna}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Datos Extra: {consulta.datosExtra}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Error Codigo: {consulta.errorCodigo}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Error Descripcion: {consulta.errorDescripcion}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Estado Codigo: {consulta.estadoCodigo}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Estado Descripcion: {consulta.estadoDescripcion}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Fecha: {consulta.fecha}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Fecha Estado: {consulta.fechaEstado}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Lugar Persona: {consulta.lugarPersona}
-              </ListGroup.Item>
-              <ListGroup.Item variant="dark">
-                Remito: {consulta.remito}
-              </ListGroup.Item>
+              { consulta.errorCodigo!='0' && (
+                <>
+                  <ListGroup.Item variant="dark">
+                    Código de Error: {consulta.errorCodigo}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    <div>Descripcion: </div>
+                    <p>{consulta.errorDescripcion}</p>
+                  </ListGroup.Item>
+                </>
+              )}
+              
+              { consulta.errorCodigo=='0' && (
+                <>
+                  <ListGroup.Item variant="dark">
+                    Agencia: {consulta.agencia}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    Clave Externa: {consulta.claveExterna}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    Datos Extra: {consulta.datosExtra}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    Código de Estado: {consulta.estadoCodigo}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    Descripcion de Estado: {consulta.estadoDescripcion}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    Fecha: {consulta.fecha}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    Fecha Estado: {consulta.fechaEstado}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    Lugar Persona: {consulta.lugarPersona}
+                  </ListGroup.Item>
+                  <ListGroup.Item variant="dark">
+                    Remito: {consulta.remito}
+                  </ListGroup.Item>
+                </>
+              )}
             </ListGroup>
           )}
         </Card>
