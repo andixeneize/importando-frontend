@@ -14,6 +14,8 @@ interface IBultos {
 interface IFormInput {
   descripcion: string;
   idBultoMirtrans: number;
+  premium: boolean;
+  base: boolean;
 }
 
 const Bultos: NextPage<IBultos> = ({ session }) => {
@@ -41,8 +43,8 @@ const notifyError = (text: string) =>
     const body = {
       descripcion: formData.descripcion,
       idBultoMirTrans: formData.idBultoMirtrans,
-      planPremium: getLogged.data?.plan === 1,
-      planBase: getLogged.data?.plan === 2,
+      planPremium: formData.premium,
+      planBase: formData.base,
       token: session.user.accessToken,
       activo: true
     };
@@ -101,6 +103,16 @@ const notifyError = (text: string) =>
               <div className="my-3">
                 <p className="mb-2 card-text">ID Mirtrans:</p>
                 <input {...register("idBultoMirtrans")} placeholder="151"  style={{ width: '100%'}} />
+              </div> 
+
+              <div className="my-3">
+                <p className="mb-2 card-text">Plan Base:</p>
+                <input {...register("base")} type="checkbox" />
+              </div>
+
+              <div className="my-3">
+                <p className="mb-2 card-text">Plan Premium:</p>
+                <input {...register("premium")} type="checkbox" />
               </div> 
 
               <div className="mt-5 text-end">
