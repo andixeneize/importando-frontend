@@ -26,14 +26,14 @@ const Bultos: NextPage<IBultos> = ({ session }) => {
   const addBulto = useAddBulto();
 
   const notifySuccess = (text: string) =>
-  toast.success(text, {
-    position: "top-right",
-  });
+    toast.success(text, {
+      position: "top-right",
+    });
 
-const notifyError = (text: string) =>
-  toast.error(text, {
-    position: "top-right",
-  });
+  const notifyError = (text: string) =>
+    toast.error(text, {
+      position: "top-right",
+    });
 
   const onSubmit: SubmitHandler<IFormInput> = async (formData) => {
     console.log("Agregando bulto...");
@@ -46,7 +46,7 @@ const notifyError = (text: string) =>
       planPremium: formData.premium,
       planBase: formData.base,
       token: session.user.accessToken,
-      activo: true
+      activo: true,
     };
 
     console.log(body);
@@ -71,67 +71,93 @@ const notifyError = (text: string) =>
   return (
     <div>
       <BarraNav />
-
-      <div className="d-flex mt-5 justify-content-around">
-        {/* LISTADO DE BULTOS */}
-        <div className="card text-white bg-dark" style={{ width: '24rem'}}>
-
-          <div className="card-header">
+      {getLogged.data?.idRol == 1 && (
+        <div className="d-flex mt-5 justify-content-around">
+          {/* LISTADO DE BULTOS */}
+          <div className="card text-white bg-dark" style={{ width: "24rem" }}>
+            <div className="card-header">
               <h5 className="card-title py-2">Bultos</h5>
             </div>
 
-          <div className="list-group" style={{ width: '24rem' }}>
-            {getBulto.data?.map((data: any) => {
-              return <div className="list-group-item list-group-item-dark">{data.descripcion}</div>
-            })}
-          </div>
-        </div>
-
-        {/* NUEVO BULTO */}
-        <div className="d-flex flex-column">
-          <div className="card text-white bg-dark" style={{ width: '24rem'}}>
-            <div className="card-header">
-              <h5 className="card-title py-2">Agregar Bulto</h5>
+            <div className="list-group" style={{ width: "24rem" }}>
+              {getBulto.data?.map((data: any) => {
+                return (
+                  <div className="list-group-item list-group-item-dark">
+                    {data.descripcion}
+                  </div>
+                );
+              })}
             </div>
+          </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-              <div className="my-3">
-                <p className="mb-2 card-text">Descripción:</p>
-                <input {...register("descripcion")} placeholder="Bulto de hasta 5kg" style={{ width: '100%'}} />
-              </div>  
-
-              <div className="my-3">
-                <p className="mb-2 card-text">ID Mirtrans:</p>
-                <input {...register("idBultoMirtrans")} placeholder="151"  style={{ width: '100%'}} />
-              </div> 
-
-              <div className="my-3">
-                <p className="mb-2 card-text">Plan Base:</p>
-                <input {...register("base")} type="checkbox" />
+          {/* NUEVO BULTO */}
+          <div className="d-flex flex-column">
+            <div className="card text-white bg-dark" style={{ width: "24rem" }}>
+              <div className="card-header">
+                <h5 className="card-title py-2">Agregar Bulto</h5>
               </div>
 
-              <div className="my-3">
-                <p className="mb-2 card-text">Plan Premium:</p>
-                <input {...register("premium")} type="checkbox" />
-              </div> 
+              <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+                <div className="my-3">
+                  <p className="mb-2 card-text">Descripción:</p>
+                  <input
+                    {...register("descripcion")}
+                    placeholder="Bulto de hasta 5kg"
+                    style={{ width: "100%" }}
+                  />
+                </div>
 
-              <div className="mt-5 text-end">
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={onReset}
-                  className="me-3"
-                >
-                  Cancelar
-                </Button>
-                <Button variant="primary" type="submit">
-                  Agregar
-                </Button>
-              </div>
-            </form>
+                <div className="my-3">
+                  <p className="mb-2 card-text">ID Mirtrans:</p>
+                  <input
+                    {...register("idBultoMirtrans")}
+                    placeholder="151"
+                    style={{ width: "100%" }}
+                  />
+                </div>
+
+                <div className="my-3">
+                  <p className="mb-2 card-text">Plan Base:</p>
+                  <input {...register("base")} type="checkbox" />
+                </div>
+
+                <div className="my-3">
+                  <p className="mb-2 card-text">Plan Premium:</p>
+                  <input {...register("premium")} type="checkbox" />
+                </div>
+
+                <div className="mt-5 text-end">
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={onReset}
+                    className="me-3"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button variant="primary" type="submit">
+                    Agregar
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {getLogged.data?.idRol != 1 && (
+        <div className="d-flex mt-5 justify-content-around">
+          {/* SIN PERMISO */}
+          <div className="d-flex flex-column">
+            <div className="card text-white bg-dark" style={{ width: "24rem" }}>
+              <div className="card-header">
+                <h5 className="card-title py-2">
+                  Usted no posee permisos para agregar Bultos
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <Toaster />
     </div>
   );
