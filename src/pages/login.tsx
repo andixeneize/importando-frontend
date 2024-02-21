@@ -37,7 +37,7 @@ const Login: NextPage = () => {
   const onSubmitLogin = handleLoginSubmit(async (formData) => {    
 		const login = await signIn('credentials', {
 			email: formData.email,
-			password: formData.password, //sha256(formData.password),
+			password: sha256(formData.password), // formData.password,
       locale: router.locale,
 			redirect: false,
 		})

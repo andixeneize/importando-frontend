@@ -112,22 +112,22 @@ const Consulta: NextPage<IConsulta> = ({ session }) => {
             <ListGroup>
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Cliente:</div>
-                <input {...register("cliente")} placeholder="1112" />
+                <input {...register("cliente")} placeholder="1234" />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Password:</div>
-                <input {...register("pwd")} placeholder="Ag.1234" />
+                <input {...register("pwd")} type="password" placeholder="ABC1234" />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Clave Externa:</div>
-                <input {...register("claveExterna")} placeholder="prueba22" />
+                <input {...register("claveExterna")} placeholder="clave123" />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Fecha:</div>
-                <input {...register("fecha")} placeholder="20230607" />
+                <input {...register("fecha")} placeholder="20240215 (año, mes, dia)" />
               </ListGroup.Item>
             </ListGroup>
 

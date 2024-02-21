@@ -71,10 +71,10 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 
   const onSubmit: SubmitHandler<IFormInput> = async (formData) => {
     console.log("Despachando...");
-    console.log(formData);
+    // console.log(formData);
 
-    console.log("Bultos del form: ", options);
-    console.log("Bulto elegido: ", formData.bultos);
+    // console.log("Bultos del form: ", options);
+    // console.log("Bulto elegido: ", formData.bultos);
 
     const body = {
       token: session.user.accessToken,
@@ -91,8 +91,8 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
       direccion: formData.direccion,
       localidad: formData.localidad,
       rut: formData.rut,
-      valorCR: "0.0", // formData.valorCR,
-      facturaCR: "1", // formData.facturaCR,
+      valorCR: formData.valorCR, // "0.0",
+      facturaCR: formData.facturaCR, // "1",
       telefonoDest: formData.telefonoDest,
       mailDest: formData.mailDest,
     };
@@ -171,12 +171,12 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Clave Externa</div>
-                <input {...register("claveExterna")} />
+                <input {...register("claveExterna")} placeholder="clave123" />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Agencia de origen</div>
-                <input {...register("agenciaOrigen")} />
+                <input {...register("agenciaOrigen")} placeholder="001"/>
               </ListGroup.Item>
 
               {/*}
@@ -187,12 +187,12 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
               */}
 
               <ListGroup.Item variant="dark" className="pb-3">
-                <div className="mb-1">Bultos (Select)</div>
+                <div className="mb-1">Bultos (Seleccione)</div>
                 <select {...register("producto")}>{options}</select>
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3">
-                <div className="mb-1">Bultos</div>
+                <div className="mb-1">Cantidad de Bultos</div>
                 <input
                   {...register("bultos")}
                   placeholder="Cantidad de bultos"
@@ -201,7 +201,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Kilos</div>
-                <input type="number" {...register("kilos")} />
+                <input type="number" {...register("kilos")} placeholder="10" />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3">
@@ -231,12 +231,22 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Password</div>
-                <input {...register("pwd")} />
+                <input {...register("pwd")} type="password" />
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">RUT</div>
                 <input {...register("rut")} />
+              </ListGroup.Item>
+
+              <ListGroup.Item variant="dark" className="pb-3">
+                <div className="mb-1">Valor contrarrembolso</div>
+                <input {...register("valorCR")} defaultValue={0.0} />
+              </ListGroup.Item>
+
+              <ListGroup.Item variant="dark" className="pb-3">
+                <div className="mb-1">Factura contrarrembolso</div>
+                <input {...register("facturaCR")} defaultValue={1} />
               </ListGroup.Item>
             </ListGroup>
 

@@ -15,8 +15,8 @@ function BarraNav() {
             <Nav.Link className={styles.option} href="/despacho">Despacho</Nav.Link>
             <Nav.Link className={styles.option} href="/consulta">Consulta</Nav.Link>
             <Nav.Link className={styles.option} href="/cobros">Cobros</Nav.Link>
-            <Nav.Link className={styles.option} href="/login">Login</Nav.Link>
             <Nav.Link className={styles.option} href="/bultos">Bultos</Nav.Link>
+            <Nav.Link className={styles.option} href="/login">Login</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
