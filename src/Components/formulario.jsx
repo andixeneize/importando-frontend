@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { addUser } from "@services/login";
 import { useRouter } from 'next/router'
+var sha256 = require('sha-256-js');
 
 const Formulario = () => {
   const router = useRouter()
@@ -15,8 +16,6 @@ const Formulario = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({});
-  
-
 
   const onSubmit = async (formData) => {
     console.log('Register')
@@ -27,10 +26,11 @@ const Formulario = () => {
       apellido: formData.apellido,
       telefono: formData.telefono,
 			email: formData.email,
-			password: formData.password, //sha256(formData.password),
+			password: sha256(formData.password), // formData.password,
       fechaNacimiento: "20000101", //formData.fechaNacimiento,
       activo: true,
-      plan: 0//formData.plan
+      plan: 1, // formData.plan  plan 1 = 1112, plan 2 = 1414 
+      idRol: 2 // rol 2 = comun
 		}
 
     addUser(body).then(async res => {
@@ -54,26 +54,24 @@ const Formulario = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container>
-          <Row>
+        <Row>
             <Col>
-              <div id="usu">
-                <label htmlFor="">Usuario</label>
+              <div id="em">
+                <label htmlFor="">Email</label>
                 <input
                   type="text"
-                  placeholder="Disabled"
-                  {...register("usuario", {
-                    required: false,
-                    // pattern: /^[a-zA-Z0-9\_\-]{4,15}$/,
-                    disabled: true
+                  placeholder="Ingrese su email"
+                  {...register("email", {
+                    required: true,
+                    pattern: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
                   })}
                 />
-                {errors.usuario?.type === "required" && (
-                  <p className={styles.error}>El campo usuario es requerido</p>
+                {errors.email?.type === "required" && (
+                  <p className={styles.error}>El campo email es requerido</p>
                 )}
-                {errors.usuario?.type === "pattern" && (
+                {errors.email?.type === "pattern" && (
                   <p className={styles.error}>
-                    El nombre debe ser de 4 a 15 caracteres y solo contener
-                    letras y/o numeros
+                    El formato del email es inválido
                   </p>
                 )}
               </div>
@@ -144,47 +142,6 @@ const Formulario = () => {
                 )}
                 {errors.telefono?.type === "pattern" && (
                   <p className={styles.error}>El formato es incorrecto</p>
-                )}
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div id="em">
-                <label htmlFor="">Email</label>
-                <input
-                  type="text"
-                  placeholder="Ingrese su email"
-                  {...register("email", {
-                    required: true,
-                    pattern: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-                  })}
-                />
-                {errors.email?.type === "required" && (
-                  <p className={styles.error}>El campo email es requerido</p>
-                )}
-                {errors.email?.type === "pattern" && (
-                  <p className={styles.error}>
-                    El formato del email es inválido
-                  </p>
-                )}
-              </div>
-            </Col>
-            <Col>
-              <div id="nac">
-                <label htmlFor="">Fecha de nacimiento</label>
-                <input
-                  type="text"
-                  placeholder="Disabled"
-                  {...register("fechaNacimiento", {
-                    required: false,
-                    disabled: true
-                  })}
-                />
-                {errors.fechaNacimiento?.type === "required" && (
-                  <p className={styles.error}>
-                    El campo fecha de nacimiento es requerido
-                  </p>
                 )}
               </div>
             </Col>
@@ -267,4 +224,49 @@ export default Formulario;
 // con la funcion condicional, con el uso de la funcion watch, se abre el nuevo campo para rellenar.
 
 // Dentro del useForm puede ingresar valores por defectos con defaultValues.
-// sasas
+
+/*
+
+            <Col>
+              <div id="usu">
+                <label htmlFor="">Usuario</label>
+                <input
+                  type="text"
+                  placeholder="Disabled"
+                  {...register("usuario", {
+                    required: false,
+                    // pattern: /^[a-zA-Z0-9\_\-]{4,15}$/,
+                    disabled: true
+                  })}
+                />
+                {errors.usuario?.type === "required" && (
+                  <p className={styles.error}>El campo usuario es requerido</p>
+                )}
+                {errors.usuario?.type === "pattern" && (
+                  <p className={styles.error}>
+                    El nombre debe ser de 4 a 15 caracteres y solo contener
+                    letras y/o numeros
+                  </p>
+                )}
+              </div>
+            </Col>
+
+              <Col>
+                <div id="nac">
+                  <label htmlFor="">Fecha de nacimiento</label>
+                  <input
+                    type="text"
+                    placeholder="Disabled"
+                    {...register("fechaNacimiento", {
+                      required: false,
+                      disabled: true
+                    })}
+                  />
+                  {errors.fechaNacimiento?.type === "required" && (
+                    <p className={styles.error}>
+                      El campo fecha de nacimiento es requerido
+                    </p>
+                  )}
+                </div>
+              </Col>
+*/

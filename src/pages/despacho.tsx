@@ -121,8 +121,14 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 
   useEffect(() => {
     refetch().then((res) => {
-      const selectOptions = res.data?.map((option: any) => {
-        // return { label: option.descripcion, value: option.idBultoMirTrans };
+      const selectOptions = res.data?.map((option: any, index: any) => {
+        if (index == 0) {
+          return (
+            <option selected value={option.idBultoMirTrans}>
+              {option.descripcion}
+            </option>
+          );
+        }
         return (
           <option value={option.idBultoMirTrans}>{option.descripcion}</option>
         );
@@ -176,7 +182,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
 
               <ListGroup.Item variant="dark" className="pb-3">
                 <div className="mb-1">Agencia de origen</div>
-                <input {...register("agenciaOrigen")} placeholder="001"/>
+                <input {...register("agenciaOrigen")} placeholder="001" />
               </ListGroup.Item>
 
               {/*}
@@ -187,7 +193,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
               */}
 
               <ListGroup.Item variant="dark" className="pb-3">
-                <div className="mb-1">Bultos (Seleccione)</div>
+                <div className="mb-1">Bulto</div>
                 <select {...register("producto")}>{options}</select>
               </ListGroup.Item>
 
@@ -288,8 +294,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
               <ListGroup.Item
                 variant="dark"
                 style={{ width: "32rem", height: "fit-content" }}
-              >
-              </ListGroup.Item>
+              ></ListGroup.Item>
 
               {consulta.errorCodigo != 0 && (
                 <>
