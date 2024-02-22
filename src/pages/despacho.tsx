@@ -124,9 +124,12 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
       const selectOptions = res.data?.map((option: any, index: any) => {
         if (index == 0) {
           return (
-            <option selected value={option.idBultoMirTrans}>
-              {option.descripcion}
-            </option>
+            <>
+              <option selected value={0}>
+                Seleccione un bulto
+              </option>
+              <option value={option.idBultoMirTrans}>{option.descripcion}</option>
+            </>
           );
         }
         return (
@@ -160,6 +163,7 @@ const Despacho: NextPage<IDespacho> = ({ session }) => {
                   <option value="N">No</option>
                   <option value="S">Si</option>
                 </select>
+
               </ListGroup.Item>
 
               <ListGroup.Item variant="dark" className="pb-3">
