@@ -13,8 +13,8 @@ export interface IDespachoRequest {
   agenciaOrigen: string;
   claveExterna: string;
   tipo: string;
-  producto: string;
-  bultos: string;
+  Bulto_IdMirTrans: string;
+  Bulto_Cantidad: string;
   kilos: string;
   destinatario: string;
   direccion: string;
